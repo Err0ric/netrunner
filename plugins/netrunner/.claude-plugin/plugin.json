@@ -1,7 +1,7 @@
 {
   "name": "netrunner",
   "version": "1.1.0",
-  "description": "Netrunner: a cyberpunk theme for Claude Code. The whole app's look with a slow network-map background, a status band above the prompt (usage bars, prompt cache WARM/COLD, a WAITING line and a sweep while anything runs) and matching transcript skins, in four variants: Packet Trace, Zero Day, Cold Boot and Black ICE.",
+  "description": "Netrunner: a cyber theme for Claude Code. The whole app's look with a slow network-map background, a status band above the prompt (usage bars, prompt cache WARM/COLD, a WAITING line and a sweep while anything runs) and matching transcript skins, in four variants: Packet Trace, Zero Day, Cold Boot and Black ICE.",
   "author": {
     "name": "Err0ric",
     "url": "https://github.com/Err0ric"
@@ -57,8 +57,8 @@
     "background",
     "claude-desktop",
     "dark-theme",
-    "cyberpunk-theme",
-    "cyberpunk",
+    "cyber-theme",
+    "cyber",
     "status-line",
     "statusline",
     "usage-meter",

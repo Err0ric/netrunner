@@ -1,6 +1,6 @@
-# Netrunner: a cyberpunk theme for Claude Code
+# Netrunner: a cyber theme for Claude Code
 
-**Netrunner is a dark cyberpunk theme for the Claude Code client** (the Claude desktop app's Code tab and the `claude` terminal) on **Windows, macOS and Linux**. It gives Claude Code the whole app's colors with a slow network-map background, a status band above the prompt, animated hacker crabs for your subagents, a WAITING line so you can see when a session is still working, funny tech spinner words, and four color variants.
+**Netrunner is a dark cyber theme for the Claude Code client** (the Claude desktop app's Code tab and the `claude` terminal) on **Windows, macOS and Linux**. It gives Claude Code the whole app's colors with a slow network-map background, a status band above the prompt, animated hacker crabs for your subagents, a WAITING line so you can see when a session is still working, funny tech spinner words, and four color variants.
 
 ![Netrunner: Packet Trace](docs/netrunner-packet-trace.svg)
 
@@ -93,4 +93,4 @@ See [NOTICE.md](NOTICE.md). Not affiliated with Anthropic.
 
 ---
 
-*Keywords: Claude Code theme, Claude Code themes, Claude Code skin, Claude Code dark theme, Claude Code background, Claude desktop app background, Claude Code animated background, Claude Code tech theme, Claude Code cyberpunk theme, Claude Code status line, Claude Code usage meter, Claude Code prompt cache, Claude Code subagents, Claude Code plugin, Claude Code mod, Claude desktop app theme, Claude Code terminal theme, Windows, macOS, Linux.*
+*Keywords: Claude Code theme, Claude Code themes, Claude Code skin, Claude Code dark theme, Claude Code background, Claude desktop app background, Claude Code animated background, Claude Code tech theme, Claude Code cyber theme, Claude Code status line, Claude Code usage meter, Claude Code prompt cache, Claude Code subagents, Claude Code plugin, Claude Code mod, Claude desktop app theme, Claude Code terminal theme, Windows, macOS, Linux.*
