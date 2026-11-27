@@ -155,6 +155,23 @@ const measure = async ($: EngineInterface, lastAt: number | null, model: string 
   }))
 }
 
+/** A variant's name without the "Netrunner: " every skin label starts with. */
+const shortName = (id: VariantId): string => VARIANTS[id].label.replace(/^Netrunner:\s*/, '')
+
+/**
+ * Saves a picked variant as the `variant` option, as the /config menu would. A changed
+ * option reloads the mod, so `register` and `session.start` run again with it: the band,
+ * the app's look, the network map and the transcript skin all follow from there.
+ */
+export const pickVariant = async ($: EngineInterface, id: VariantId): Promise<void> => {
+  const rows = await $.config.list().catch(() => [])
+  const key = rows.find(r => /^netrunner(@[^.]+)?\.variant$/.test(r.key))?.key ?? 'netrunner.variant'
+  const r = (await $.config.set({ key, value: id }).catch((err: unknown) => ({
+    deny: err instanceof Error ? err.message : String(err),
+  }))) as { deny?: string }
+  if (r.deny) void $.ui.toast(`Netrunner: ${shortName(id)} not saved: ${r.deny}`)
+}
+
 export const register: Register = (on, options) => {
   const variant = variantOf(options.variant).id
   useVariant(variant)
@@ -480,8 +497,20 @@ export const register: Register = (on, options) => {
         ]
       : [<Text key="left" color={hue} bold>{` ${Math.max(0, TTL_MIN - view.idleMin)}m`}</Text>]
 
+    // While the card is open, one dot per variant sits just left of the fold glyph, on the
+    // row that is already there: no row of its own. Each dot is its variant's accent; the
+    // current one is ringed. A press saves the option and the reload repaints everything.
+    const dots = open
+      ? VARIANT_IDS.flatMap((id, i) => [
+          i > 0 ? <Text key={`vgap-${id}`}> </Text> : null,
+          <Button key={`variant-${id}`} label={shortName(id)} plain onPress={() => (id === variant ? undefined : pickVariant($, id))}>
+            <Text color={VARIANTS[id].band.accent} bold={id === variant}>{id === variant ? '◉' : '●'}</Text>
+          </Button>,
+        ])
+      : []
     const button = Svg ? (
-      <Box key="fold" flexShrink={0} alignItems="flex-start">
+      <Box key="fold" flexDirection="row" flexShrink={0} alignItems="flex-start">
+        {dots.length ? <Box key="variants" flexDirection="row" flexShrink={0} marginRight={2}>{dots}</Box> : null}
         {/* One dim glyph instead of a full button; the label still names it for readers. */}
         <Button key="cache-fold" label={open ? 'Hide' : 'Show'} plain dimColor onPress={toggle}>
           {open ? '▴' : '▾'}
