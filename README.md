@@ -21,7 +21,7 @@
 ## What you get
 
 - **App look and background**: in the desktop app, the variant colors the whole window (page, cards, panels, menus, text and code highlighting) and draws a sparse network map behind the conversation, with packets drifting along its links and a node that pings. It moves on slow 12 to 70 second loops, stays in the corners away from the words, and holds still if your system asks for reduced motion or you set `look` to `still`.
-- **Status band above the prompt**: how much of your 7-day and 5-hour usage is used (amber at 60%, red with HIGH at 85%), and the prompt cache: **WARM** for an hour after the last request, then **COLD** with what the next message costs to re-cache. **Show** opens a card with the details.
+- **Status band above the prompt**: how much of your 7-day and 5-hour usage is used (amber at 60%, red with HIGH at 85%), and the prompt cache: **WARM** for an hour after the last request, then **COLD** with what the next message costs to re-cache. **Show** opens a card with the details, and four small dots beside its ▴ switch the variant in one click (the ringed dot is the current one).
 - **WAITING line**: when a turn ends with work still running (a background command, a background agent, a monitor, a workflow or a scheduled wake-up), the band says what the session is waiting on and for how long, so a session that is waiting no longer looks finished.
 - **Sweep**: a light runs along the band whenever anything in the session is running (a turn, waiting work or subagents) and stops when nothing is.
 - **Hacker crabs** (`netrunner-crew`): running subagents show as walking crabs in hacker outfits with a count and their task, on one compact line that joins the WAITING line. `×N` or `/crew` opens the full agents panel; no window pops up on its own.
@@ -46,13 +46,25 @@ In the Claude desktop app, where `/plugin` does not run: click **+** next to the
 
 On the first start, Netrunner saves its four skins into the skins mod (`netrunner-packet-trace`, `netrunner-zero-day`, `netrunner-cold-boot`, `netrunner-black-ice`) and switches to the variant you chose.
 
+## Update
+
+From a shell, refresh the marketplace, then update the plugins:
+
+```
+claude plugin marketplace update netrunner
+claude plugin update netrunner@netrunner
+claude plugin update netrunner-crew@netrunner
+```
+
+Then run `/reload-plugins` in an open session, or start a new one.
+
 ## Settings
 
 In a terminal session, open `/config` and find **Netrunner**:
 
 | Option | Values | Default |
 | --- | --- | --- |
-| `variant` | `packet-trace`, `zero-day`, `cold-boot`, `black-ice` | `packet-trace` |
+| `variant` | `packet-trace`, `zero-day`, `cold-boot`, `black-ice` (in the desktop app, also the dots on the open cache card) | `packet-trace` |
 | `look` | `animated`: the variant's colors for the whole app and the moving network map. `still`: the same, held still. `off`: keep the app's own colors and background | `animated` |
 | `skin` | `apply` switches the transcript skin when you pick a variant; `keep` saves the skins but leaves yours alone | `apply` |
 
