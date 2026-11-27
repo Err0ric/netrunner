@@ -2,28 +2,21 @@
 
 **Netrunner is a dark cyber theme for the Claude Code client** (the Claude desktop app's Code tab and the `claude` terminal) on **Windows, macOS and Linux**. It gives Claude Code the whole app's colors with a slow network-map background, a status band above the prompt, animated hacker crabs for your subagents, a WAITING line so you can see when a session is still working, and five color variants.
 
-![Netrunner in the Claude desktop app, cycling through Packet Trace, Zero Day, Cold Boot and Black ICE](docs/netrunner-hero.svg)
+![Netrunner in the Claude desktop app, cycling through Packet Trace, Zero Day, Cold Boot, Black ICE and Red Team](docs/netrunner-hero.svg)
 
-*The Claude Code desktop app with Netrunner, cycling through Packet Trace, Zero Day, Cold Boot and Black ICE. The conversation is a made-up example.*
+*The Claude Code desktop app with Netrunner, cycling through all five variants. The conversation is a made-up example.*
 
 ## Color variants
 
-| Packet Trace | Zero Day |
+| Variant | Look |
 | --- | --- |
-| ![Packet Trace](docs/netrunner-packet-trace.svg) | ![Zero Day](docs/netrunner-zero-day.svg) |
-| Graphite, phosphor teal, violet highlights | Terminal green on near-black, magenta highlights |
+| **Packet Trace** (default) | Graphite, phosphor teal, violet highlights |
+| **Zero Day** | Terminal green on near-black, magenta highlights |
+| **Cold Boot** | Steel, ice cyan, periwinkle highlights |
+| **Black ICE** | Black and white; color only for errors, warnings and success |
+| **Red Team** | Red-black, deep crimson, ember highlights |
 
-| Cold Boot | Black ICE |
-| --- | --- |
-| ![Cold Boot](docs/netrunner-cold-boot.svg) | ![Black ICE](docs/netrunner-black-ice.svg) |
-| Steel, ice cyan, periwinkle highlights | Black and white; color only for errors, warnings and success |
-
-| Red Team |
-| --- |
-| ![Red Team](docs/netrunner-red-team.svg) |
-| Red-black, deep crimson, ember highlights |
-
-Before 1.6.0, Black ICE was the crimson palette. That palette is now Red Team: pick it with its dot on the cache card, or set `variant` to `red-team`.
+Switch with the dots on the open cache card in the desktop app, or with the `variant` option (see Settings). Before 1.6.0, Black ICE was the crimson palette, which is now Red Team.
 
 ## What you get
 

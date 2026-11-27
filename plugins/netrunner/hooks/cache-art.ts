@@ -244,7 +244,8 @@ export const sweepSvg = (w: number): string => {
     h,
     css +
       defs +
-      `<rect x="0" y="${y - 1}" width="${w}" height="2" fill="${WAIT}" opacity=".55"/>` +
+      // The resting line stays faint; the glow is what draws the eye.
+      `<rect x="0" y="${y - 1}" width="${w}" height="2" fill="${WAIT}" opacity=".25"/>` +
       `<g class="c">` +
       `<rect x="0" y="${y - 3}" width="${glow}" height="6" rx="3" fill="url(#sg)" filter="url(#sb)"/>` +
       `<rect x="${glow * 0.2}" y="${y - 1}" width="${glow * 0.6}" height="2" rx="1" fill="url(#sc)"/>` +
