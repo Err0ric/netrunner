@@ -20,8 +20,8 @@
 
 ## What you get
 
-- **App look and background**: in the desktop app, the variant colors the whole window (page, cards, panels, menus, text and code highlighting) and draws a sparse network map behind the conversation, with packets drifting along its links and a node that pings. It moves on slow 12 to 70 second loops, stays in the corners away from the words, and holds still if your system asks for reduced motion or you set `look` to `still`.
-- **Status band above the prompt**: how much of your 7-day and 5-hour usage is used (amber at 60%, red with HIGH at 85%), and the prompt cache: **WARM** for an hour after the last request, then **COLD** with what the next message costs to re-cache. **Show** opens a card with the details, and four small dots beside its ▴ switch the variant in one click (the ringed dot is the current one).
+- **App look and background**: in the desktop app, the variant colors the whole window (page, cards, panels, menus, text and code highlighting) and draws a sparse network map behind the conversation, with packets drifting along its links and a node that pings. It moves on slow 12 to 70 second loops, stays in the corners away from the words, and holds still (the map stays, the moving packets are left out) if your system asks for reduced motion or you set `look` to `still`.
+- **Status band above the prompt**: how much of your 7-day and 5-hour usage is used (amber at 60%, red with HIGH at 85%), and the prompt cache: **WARM** for an hour after the last request, then **COLD** with what the next message costs to re-cache. **Show** (▾) opens a card with the details. While it is open, four small dots beside its ▴ switch the variant in one click (the ringed dot is the current one).
 - **WAITING line**: when a turn ends with work still running (a background command, a background agent, a monitor, a workflow or a scheduled wake-up), the band says what the session is waiting on and for how long, so a session that is waiting no longer looks finished.
 - **Sweep**: a light runs along the band whenever anything in the session is running (a turn, waiting work or subagents) and stops when nothing is.
 - **Hacker crabs** (`netrunner-crew`): running subagents show as walking crabs in hacker outfits with a count and their task, on one compact line that joins the WAITING line. `×N` or `/crew` opens the full agents panel; no window pops up on its own.
@@ -47,14 +47,23 @@ filetree's sidebar needs the fullscreen layout in a terminal (`/tui fullscreen`,
 
 ### Already have skins or filetree?
 
-If you installed `skins` from `hellosverre/claude-skins` or `filetree` from `data-goblin/claude-code-filetree` before, remove those copies first, or you end up with two of each:
+If you installed `skins` from `hellosverre/claude-skins` or `filetree` from `data-goblin/claude-code-filetree` before, switch to the copies listed here, or you end up with two of each.
+
+1. Note the filetree options you changed in `/config` (Open at start, Palette and so on): uninstalling removes them.
+2. Remove the old copies, then bring in the ones listed here. Updating `netrunner` does not install a plugin that is missing, so install them by name; `netrunner` does not load until `skins` is there:
 
 ```
 claude plugin uninstall skins@hellosverre-mods
 claude plugin uninstall filetree@claude-code-filetree
+claude plugin marketplace update netrunner
+claude plugin update netrunner@netrunner
+claude plugin install skins@netrunner
+claude plugin install filetree@netrunner
 ```
 
-Your saved skins stay. filetree's settings are stored under the plugin's full name, so options you set for `filetree@claude-code-filetree` need setting again for `filetree@netrunner`.
+3. Run `/reload-plugins` or start a new session. On that start Netrunner sees the new skins copy has none of its skins, saves the four again and switches to your variant's skin.
+
+Each plugin keeps its settings and saved data under its full name (`skins@netrunner` is not `skins@hellosverre-mods`), so the new copies start fresh: set filetree's options again, and any skins of your own and your skins settings (rail, icons, tables and so on) need making or setting again too.
 
 On the first start, Netrunner saves its four skins into the skins mod (`netrunner-packet-trace`, `netrunner-zero-day`, `netrunner-cold-boot`, `netrunner-black-ice`) and switches to the variant you chose.
 
@@ -70,7 +79,7 @@ claude plugin update skins@netrunner
 claude plugin update filetree@netrunner
 ```
 
-Updating `netrunner` also installs any of those plugins that are missing.
+An update does not install a plugin that is missing: if `claude plugin list` shows `netrunner` failing to load for a missing one, install it by name (`claude plugin install skins@netrunner`).
 
 Then run `/reload-plugins` in an open session, or start a new one.
 
@@ -81,7 +90,7 @@ In a terminal session, open `/config` and find **Netrunner**:
 | Option | Values | Default |
 | --- | --- | --- |
 | `variant` | `packet-trace`, `zero-day`, `cold-boot`, `black-ice` (in the desktop app, also the dots on the open cache card) | `packet-trace` |
-| `look` | `animated`: the variant's colors for the whole app and the moving network map. `still`: the same, held still. `off`: keep the app's own colors and background | `animated` |
+| `look` | `animated`: the variant's colors for the whole app and the moving network map. `still`: the same map, held still, without the moving packets. `off`: keep the app's own colors and background | `animated` |
 | `skin` | `apply` switches the transcript skin when you pick a variant; `keep` saves the skins but leaves yours alone | `apply` |
 | `filetree` | `match` sets the [filetree](https://github.com/data-goblin/claude-code-filetree) mod's palette to the variant's colors (a palette you wrote yourself is left alone); `off` never touches filetree | `match` |
 
@@ -97,7 +106,7 @@ To switch skins by hand: `/skin netrunner-black-ice` (or any other).
 
 ### Matching file tree colors
 
-If you use the [filetree](https://github.com/data-goblin/claude-code-filetree) mod, Netrunner sets its `palette` option to your variant's line at each start, so folders and git colors follow when you switch variants. It only writes over an empty palette or one of the lines below: a palette of your own stays as it is. Set Netrunner's `filetree` option to `off` to stop it.
+If you use the [filetree](https://github.com/data-goblin/claude-code-filetree) mod, Netrunner sets its `palette` option to your variant's line at each start, so folders and git colors follow when you switch variants. It only writes over an empty palette, one of the lines below, or the pink Black ICE line from before 1.3.0: a palette of your own stays as it is. Set Netrunner's `filetree` option to `off` to stop it.
 
 To set one by hand instead, these are the lines:
 

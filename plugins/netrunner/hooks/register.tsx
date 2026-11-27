@@ -25,19 +25,45 @@ const SKINS_TOOL = 'mcp__skins__design'
 /** Bump when a variant's skin changes, so the next start saves the four again. */
 const SKIN_SET = 'netrunner-skins-2'
 
+/** The Netrunner skins the skins mod says it holds, or null when it would not say. */
+const madeSkins = async ($: EngineInterface): Promise<string[] | null> => {
+  const r = (await $.tool.call({ tool: SKINS_TOOL, action: 'show' } as never)) as { result?: unknown; deny?: string; isError?: boolean }
+  if (!r || r.deny || r.isError) return null
+  try {
+    const made = (JSON.parse(String(r.result)) as { made?: unknown }).made
+    return Array.isArray(made) ? made.filter((m): m is string => typeof m === 'string') : null
+  } catch {
+    return null
+  }
+}
+
 /**
  * Saves the four Netrunner skins into the skins mod once per SKIN_SET, and switches the
  * transcript to the chosen variant's skin when that choice is new (`skin: apply`). Never
  * switches back over a skin the person picked later, until they pick another variant.
+ *
+ * With `check` (at session start) it first asks the skins mod which skins it holds: a
+ * skins mod that lost them, or a new copy of it (switching to the one this marketplace
+ * lists starts with an empty store), gets them saved again whatever the marker says, and
+ * a copy holding no made skins at all gets the variant's skin applied too.
  */
-export const syncSkins = async ($: EngineInterface, variant: VariantId, apply: boolean): Promise<'done' | 'missing' | 'failed'> => {
-  const saved = await $.store.get('skinSet')
-  const applied = await $.store.get('skinApplied')
+export const syncSkins = async ($: EngineInterface, variant: VariantId, apply: boolean, check = false): Promise<'done' | 'missing' | 'failed'> => {
+  let saved = await $.store.get('skinSet')
+  let applied = await $.store.get('skinApplied')
   const call = async (input: Record<string, unknown>): Promise<boolean> => {
     const r = (await $.tool.call({ tool: SKINS_TOOL, ...input } as never)) as { deny?: string; isError?: boolean }
     return !r?.deny && !r?.isError
   }
   try {
+    if (check) {
+      const made = await madeSkins($)
+      if (made) {
+        const ours = VARIANT_IDS.filter(id => made.includes(skinName(id)))
+        if (ours.length < VARIANT_IDS.length) saved = undefined
+        // No made skins at all: a new copy nobody has picked a skin in yet.
+        if (made.length === 0) applied = undefined
+      }
+    }
     if (saved !== SKIN_SET) {
       for (const id of VARIANT_IDS) {
         const v = VARIANTS[id]
@@ -220,7 +246,7 @@ export const register: Register = (on, options) => {
     // filetree's rows are listed by then too.
     $.clock.after(1500, async () => {
       if (matchFiletree) await syncFiletree($, variant).catch(() => undefined)
-      const r = await syncSkins($, variant, applySkin)
+      const r = await syncSkins($, variant, applySkin, true)
       if (r === 'missing' && !(await $.store.get('skinsHintShown'))) {
         await $.store.set('skinsHintShown', true)
         void $.ui.toast('Netrunner: install the skins mod to color the transcript too (see the Netrunner README).')
@@ -404,7 +430,8 @@ export const register: Register = (on, options) => {
     const sweepW = Math.max(160, (e.props.bodyColumns ?? e.viewport?.columns ?? 100) * 8 - 24)
     const sweep = busy && Svg ? (
       <Box key="wsweep" flexDirection="row">
-        <Svg source={sweepSvg(sweepW)} alt="" width={sweepW} height={SWEEP_H} isInteractive />
+        {/* alt is required: the desktop app drops an Svg whose alt is empty. */}
+        <Svg source={sweepSvg(sweepW)} alt="Working" width={sweepW} height={SWEEP_H} isInteractive />
       </Box>
     ) : null
 

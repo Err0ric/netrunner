@@ -82,6 +82,9 @@ test('desktop: the sweep runs for a turn even when the band is told isWorking: f
   expect(await sweeps()).toBe(0)
   await fire($, 'turn.start', { text: 'hi', turnId: 't1' })
   expect(await sweeps()).toBe(1)
+  // Every drawing names itself: alt is required, and a surface drops an Svg without one.
+  const ui = await $.ui.mount({ plugin: PLUGIN, surface: 'desktop', component: 'AbovePrompt', props: band })
+  for (const el of await ui.findAll({ type: 'Svg' })) expect(String(el.props.alt ?? '').trim()).not.toBe('')
   // A subagent's end does not stop the main turn's sweep.
   await fire($, 'turn.complete', { turnId: 'a-t', agentId: 'a1', durationMs: 10, reason: 'completed' })
   expect(await sweeps()).toBe(1)
