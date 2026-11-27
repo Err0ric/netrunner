@@ -50,11 +50,68 @@ test('the four skins are saved once and the chosen one applied once', { options:
   expect(calls.filter(c => c.action === 'save').every(c => c.apply === false)).toBe(true)
   expect(calls.filter(c => c.action === 'apply').map(c => c.name)).toEqual([skinName('cold-boot')])
 
-  // A later start does nothing: the skins are there and the choice was applied.
+  // A later start only looks: the skins are there and the choice was applied.
   calls.length = 0
   await $.session.start({ source: 'startup', cwd: '/repo', surface: 'desktop', isInteractive: true } as never)
   await clock.advance(2000)
-  expect(calls).toEqual([])
+  expect(calls.filter(c => c.action !== 'show')).toEqual([])
+})
+
+/** A stand-in skins mod that keeps its made skins and current skin, as the real one does. */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const fakeSkins = (on: any) => {
+  const mod = { made: new Set<string>(), current: 'default', calls: [] as string[] }
+  on('tool.call' as never, { tool: SKINS } as never, ((_$: unknown, e: { action?: string; name?: string; apply?: boolean }) => {
+    mod.calls.push(`${e.action}${e.name ? ` ${e.name}` : ''}`)
+    if (e.action === 'show') return { result: JSON.stringify({ current: mod.current, made: [...mod.made] }) }
+    if (e.action === 'save' && e.name) {
+      mod.made.add(e.name)
+      if (e.apply !== false) mod.current = e.name
+    }
+    if (e.action === 'apply' && e.name) {
+      if (!mod.made.has(e.name)) return { deny: `no skin named "${e.name}"` }
+      mod.current = e.name
+    }
+    return { result: 'ok' }
+  }) as never)
+  return mod
+}
+
+const startup = { source: 'startup', cwd: '/repo', surface: 'desktop', isInteractive: true }
+
+test('a new, empty skins copy gets the four skins again and the variant applied', { options: { variant: 'black-ice' } }, async ($, on) => {
+  const clock = mock.clock(on)
+  engine(on)
+  const mod = fakeSkins(on)
+  await $.session.start(startup as never)
+  await clock.advance(2000)
+  expect(mod.current).toBe(skinName('black-ice'))
+
+  // Switching to the skins this marketplace lists: a fresh store, nothing made, the stock skin on.
+  mod.made.clear()
+  mod.current = 'default'
+  mod.calls.length = 0
+  await $.session.start(startup as never)
+  await clock.advance(2000)
+  expect([...mod.made].sort()).toEqual(VARIANT_IDS.map(skinName).sort())
+  expect(mod.current).toBe(skinName('black-ice'))
+})
+
+test('a skins copy with skins of the person\'s own gets ours back, but keeps the skin they picked', { options: { variant: 'black-ice' } }, async ($, on) => {
+  const clock = mock.clock(on)
+  engine(on)
+  const mod = fakeSkins(on)
+  await $.session.start(startup as never)
+  await clock.advance(2000)
+
+  // They deleted ours and picked a skin of their own.
+  mod.made.clear()
+  mod.made.add('my-skin')
+  mod.current = 'my-skin'
+  await $.session.start(startup as never)
+  await clock.advance(2000)
+  expect(VARIANT_IDS.every(id => mod.made.has(skinName(id)))).toBe(true)
+  expect(mod.current).toBe('my-skin')
 })
 
 test('keep: the skins are saved but the current skin is left alone', { options: { variant: 'black-ice', skin: 'keep' } }, async ($, on) => {
