@@ -61,6 +61,26 @@
         "macos",
         "linux"
       ]
+    },
+    {
+      "name": "skins",
+      "source": {
+        "source": "github",
+        "repo": "hellosverre/claude-skins",
+        "sha": "a4cdb19de27e08f985e4842d43cd19ccda60ffea"
+      },
+      "description": "Skins for Claude Code by hellosverre (MIT), listed here so one install brings the Netrunner transcript skins. Pinned to the commit Netrunner is tested with.",
+      "category": "themes"
+    },
+    {
+      "name": "filetree",
+      "source": {
+        "source": "github",
+        "repo": "data-goblin/claude-code-filetree",
+        "sha": "56de6f0684653a4e2f165ce9229ff54290a3417d"
+      },
+      "description": "An IDE-style file tree by data-goblin (MIT), listed here so one install brings it with Netrunner's matching colors. Pinned to the commit Netrunner is tested with.",
+      "category": "themes"
     }
   ]
 }

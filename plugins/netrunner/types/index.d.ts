@@ -17,6 +17,6 @@ export type WaitItem = { id: string; text: string; since: number; kind?: string 
 
 declare module 'claude-code' {
   interface PluginState {
-    'netrunner': { windows: Window[]; cache: CacheFacts | null; fold: Fold | null; waiting: WaitItem[] }
+    'netrunner': { windows: Window[]; cache: CacheFacts | null; fold: Fold | null; waiting: WaitItem[]; working: boolean }
   }
 }

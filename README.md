@@ -30,19 +30,31 @@
 
 ## Install
 
-At the prompt of a Claude Code terminal session (`claude`):
+One install brings everything: `netrunner` pulls in `netrunner-crew` (the crabs), [skins](https://github.com/hellosverre/claude-skins) by hellosverre (the transcript skins) and [filetree](https://github.com/data-goblin/claude-code-filetree) by data-goblin (the file tree, in matching colors). Both are MIT and listed in this marketplace from their own repositories, pinned to the commits Netrunner is tested with.
+
+From a shell:
 
 ```
-/plugin install skins --marketplace hellosverre/claude-skins
-/plugin install netrunner --marketplace Err0ric/netrunner
-/plugin install netrunner-crew --marketplace Err0ric/netrunner
+claude plugin marketplace add Err0ric/netrunner
+claude plugin install netrunner@netrunner
 ```
 
-Answer `y` to add each marketplace, then pick the user scope. From a shell, the same with `claude plugin install <plugin> --marketplace <owner>/<repo>`.
+Or at the prompt of a Claude Code terminal session (`claude`): `/plugin install netrunner --marketplace Err0ric/netrunner`, answer `y` to add the marketplace, then pick the user scope.
 
-In the Claude desktop app, where `/plugin` does not run: click **+** next to the prompt box, then **Plugins**, **Add marketplace** with `Err0ric/netrunner`, then **Add plugin** for `netrunner` and `netrunner-crew` (and the same with `hellosverre/claude-skins` for `skins`). Plugins installed from a terminal at the user scope load in the desktop app too.
+In the Claude desktop app, where `/plugin` does not run: click **+** next to the prompt box, then **Plugins**, **Add marketplace** with `Err0ric/netrunner`, then **Add plugin** for `netrunner`. Plugins installed from a terminal at the user scope load in the desktop app too.
 
-`skins` colors the transcript; without it Netrunner still draws the band and tells you once that the skins are missing. `netrunner-crew` is optional: without it there are no crabs.
+filetree's sidebar needs the fullscreen layout in a terminal (`/tui fullscreen`, at least 110 columns); the desktop app docks it by itself. `/filetree` opens or closes it.
+
+### Already have skins or filetree?
+
+If you installed `skins` from `hellosverre/claude-skins` or `filetree` from `data-goblin/claude-code-filetree` before, remove those copies first, or you end up with two of each:
+
+```
+claude plugin uninstall skins@hellosverre-mods
+claude plugin uninstall filetree@claude-code-filetree
+```
+
+Your saved skins stay. filetree's settings are stored under the plugin's full name, so options you set for `filetree@claude-code-filetree` need setting again for `filetree@netrunner`.
 
 On the first start, Netrunner saves its four skins into the skins mod (`netrunner-packet-trace`, `netrunner-zero-day`, `netrunner-cold-boot`, `netrunner-black-ice`) and switches to the variant you chose.
 
@@ -54,7 +66,11 @@ From a shell, refresh the marketplace, then update the plugins:
 claude plugin marketplace update netrunner
 claude plugin update netrunner@netrunner
 claude plugin update netrunner-crew@netrunner
+claude plugin update skins@netrunner
+claude plugin update filetree@netrunner
 ```
+
+Updating `netrunner` also installs any of those plugins that are missing.
 
 Then run `/reload-plugins` in an open session, or start a new one.
 
