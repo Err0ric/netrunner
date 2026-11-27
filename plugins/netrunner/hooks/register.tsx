@@ -424,10 +424,11 @@ export const register: Register = (on, options) => {
     // row beneath). It stops only when nothing is.
     const crewBelow = (below as { props?: { key?: string } } | null)?.props?.key === 'savvy-crew-wrap'
     const busy = Boolean(e.props.isWorking) || (await read($, working)) || waits.length > 0 || crewBelow
-    // The desktop band is about 8 CSS px a reported column (bandPx's 12 is the card's
-    // scale): a sweep drawn wider than the band is cropped, and its light spends most of
-    // each pass off the visible part.
-    const sweepW = Math.max(160, (e.props.bodyColumns ?? e.viewport?.columns ?? 100) * 8 - 24)
+    // The desktop band is about 8.5 CSS px a reported column (bandPx's 12 is the card's
+    // scale; measured: 89 columns, a band about 750px wide). At 8 a column the line
+    // stopped short of the band's right edge. A few px too wide is cropped and unseen; much
+    // wider and the light would spend part of each pass off the visible band.
+    const sweepW = Math.max(160, Math.round((e.props.bodyColumns ?? e.viewport?.columns ?? 100) * 8.5))
     const sweep = busy && Svg ? (
       <Box key="wsweep" flexDirection="row">
         {/* alt is required: the desktop app drops an Svg whose alt is empty. */}
