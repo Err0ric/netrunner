@@ -4,7 +4,7 @@
     "name": "Err0ric",
     "url": "https://github.com/Err0ric"
   },
-  "description": "Netrunner: a hacker / cyberpunk theme for Claude Code (desktop app and terminal, Windows, macOS, Linux). A status band above the prompt, animated subagent crabs, and four color variants.",
+  "description": "Netrunner: a cyberpunk theme for Claude Code (desktop app and terminal, Windows, macOS, Linux). A status band above the prompt, animated subagent crabs, and four color variants.",
   "plugins": [
     {
       "name": "netrunner",
@@ -19,7 +19,7 @@
         "claude-code-skin",
         "theme",
         "dark-theme",
-        "hacker-theme",
+        "cyberpunk-theme",
         "cyberpunk",
         "status-line",
         "statusline",
@@ -48,7 +48,7 @@
         "claude-code-skin",
         "theme",
         "dark-theme",
-        "hacker-theme",
+        "cyberpunk-theme",
         "cyberpunk",
         "status-line",
         "statusline",
