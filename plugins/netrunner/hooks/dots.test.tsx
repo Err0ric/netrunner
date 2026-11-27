@@ -44,6 +44,16 @@ test('desktop: the open cache card shows one dot per variant on its existing top
   // They share the fold control's box, on the row that was already there: no new row.
   expect(holds(await ui.find({ key: 'fold' }), 'variants')).toBe(true)
   expect(holds(await ui.find({ key: 'row' }), 'variants')).toBe(true)
+  // A desktop draws a Button's label, so each label must be the glyph itself, never a
+  // word: word labels made each dot a full variant name and pushed the fold control off
+  // the card. (With no label given, the engine takes the one text child as the label.)
+  type Props = { props?: { label?: unknown } }
+  const words = /[a-z]/i
+  for (const id of VARIANT_IDS) {
+    const dot = (await ui.find({ key: `variant-${id}` })) as Props
+    expect(String(dot?.props?.label ?? '')).not.toMatch(words)
+  }
+  expect(String(((await ui.find({ key: 'cache-fold' })) as Props)?.props?.label ?? '')).not.toMatch(words)
 })
 
 test('desktop: a dot saves its variant as the option; the current one saves nothing', async ($, on) => {
