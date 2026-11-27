@@ -210,41 +210,45 @@ export const waitChipSvg = (): { source: string; w: number; h: number } => {
 }
 
 /**
- * The WAITING sweep: a thin track across the band with a teal comet and a few
- * trailing packets running along it, so an idle-but-busy session visibly moves.
- * It only exists while WAITING shows; prefers-reduced-motion leaves the track still.
+ * The sweep: a visible line in the variant's accent across the band, and one wide, soft
+ * glow with a bright core travelling along it, so a busy session visibly moves. The glow
+ * is blurred in the drawing itself, so it reads as soft on a 100% (1x) screen as well
+ * as a 2x one. prefers-reduced-motion leaves the line still and hides the glow.
  */
-export const SWEEP_H = 6
+export const SWEEP_H = 10
 export const sweepSvg = (w: number): string => {
   const h = SWEEP_H
   const y = h / 2
-  const tail = 110
-  const dur = 2.2
-  const run = (cls: string, delay: number) =>
-    `.${cls}{animation:sw ${dur}s cubic-bezier(.45,.05,.55,.95) ${delay}s infinite}`
+  // The glow is about a third of the band, within sensible bounds.
+  const glow = Math.max(120, Math.min(320, Math.round(w * 0.3)))
+  const dur = 2.8
   const css =
-    `<style>@keyframes sw{from{transform:translateX(-${tail}px)}to{transform:translateX(${w + tail}px)}}` +
-    run('c', 0) + run('k1', -0.18) + run('k2', -0.34) + run('k3', -0.48) + run('c2', -dur / 2) +
-    '@media (prefers-reduced-motion: reduce){.c,.c2,.k1,.k2,.k3{animation:none;opacity:0}}</style>'
-  const grad =
-    '<defs><linearGradient id="g" x1="0" x2="1" y1="0" y2="0">' +
+    `<style>@keyframes sw{from{transform:translateX(-${glow}px)}to{transform:translateX(${w}px)}}` +
+    `.c{animation:sw ${dur}s cubic-bezier(.45,.05,.55,.95) infinite}` +
+    '@media (prefers-reduced-motion: reduce){.c{animation:none;opacity:0}}</style>'
+  const defs =
+    '<defs>' +
+    // Symmetric: dark at both ends, brightest in the middle.
+    '<linearGradient id="sg" x1="0" x2="1" y1="0" y2="0">' +
     `<stop offset="0" stop-color="${WAIT}" stop-opacity="0"/>` +
-    `<stop offset=".85" stop-color="${WAIT}" stop-opacity=".9"/>` +
-    `<stop offset="1" stop-color="${GLOW}" stop-opacity="1"/></linearGradient></defs>`
-  const packet = (cls: string, op: number) =>
-    `<g class="${cls}"><rect x="${-tail - 10}" y="${y - 1.5}" width="3" height="3" fill="${WAIT}" opacity="${op}"/></g>`
+    `<stop offset=".5" stop-color="${WAIT}" stop-opacity=".95"/>` +
+    `<stop offset="1" stop-color="${WAIT}" stop-opacity="0"/></linearGradient>` +
+    '<linearGradient id="sc" x1="0" x2="1" y1="0" y2="0">' +
+    `<stop offset="0" stop-color="${GLOW}" stop-opacity="0"/>` +
+    `<stop offset=".5" stop-color="${GLOW}" stop-opacity="1"/>` +
+    `<stop offset="1" stop-color="${GLOW}" stop-opacity="0"/></linearGradient>` +
+    '<filter id="sb" x="-20%" y="-300%" width="140%" height="700%"><feGaussianBlur stdDeviation="2.4"/></filter>' +
+    '</defs>'
   return svgDoc(
     w,
     h,
     css +
-      grad +
-      `<rect x="0" y="${y - 0.5}" width="${w}" height="1" fill="${WAIT}" opacity=".18"/>` +
-      `<g class="c"><rect x="${-tail}" y="${y - 1.5}" width="${tail}" height="3" rx="1.5" fill="url(#g)"/>` +
-      `<circle cx="0" cy="${y}" r="2.6" fill="${GLOW}"/></g>` +
-      // A second, dimmer light half a pass behind: something is always moving on the line.
-      `<g class="c2" opacity=".55"><rect x="${-tail * 0.7}" y="${y - 1}" width="${tail * 0.7}" height="2" rx="1" fill="url(#g)"/>` +
-      `<circle cx="0" cy="${y}" r="2" fill="${GLOW}"/></g>` +
-      packet('k1', 0.8) + packet('k2', 0.55) + packet('k3', 0.3),
+      defs +
+      `<rect x="0" y="${y - 1}" width="${w}" height="2" fill="${WAIT}" opacity=".55"/>` +
+      `<g class="c">` +
+      `<rect x="0" y="${y - 3}" width="${glow}" height="6" rx="3" fill="url(#sg)" filter="url(#sb)"/>` +
+      `<rect x="${glow * 0.2}" y="${y - 1}" width="${glow * 0.6}" height="2" rx="1" fill="url(#sc)"/>` +
+      `</g>`,
   )
 }
 
