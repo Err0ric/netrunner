@@ -1,7 +1,7 @@
 {
   "name": "netrunner",
-  "version": "1.5.1",
-  "description": "Netrunner: a cyber theme for Claude Code. The whole app's look with a slow network-map background, a status band above the prompt (usage bars, prompt cache WARM/COLD, a WAITING line and a sweep while anything runs) and matching transcript skins, in four variants: Packet Trace, Zero Day, Cold Boot and Black ICE.",
+  "version": "1.6.0",
+  "description": "Netrunner: a cyber theme for Claude Code. The whole app's look with a slow network-map background, a status band above the prompt (usage bars, prompt cache WARM/COLD, a WAITING line and a sweep while anything runs) and matching transcript skins, in five variants: Packet Trace, Zero Day, Cold Boot, Black ICE and Red Team.",
   "author": {
     "name": "Err0ric",
     "url": "https://github.com/Err0ric"
@@ -19,13 +19,14 @@
     "variant": {
       "type": "string",
       "title": "Color variant",
-      "description": "packet-trace: graphite, teal and violet. zero-day: terminal green and magenta. cold-boot: steel, ice cyan and periwinkle. black-ice: red-black, deep crimson and ember.",
+      "description": "packet-trace: graphite, teal and violet. zero-day: terminal green and magenta. cold-boot: steel, ice cyan and periwinkle. black-ice: black and white, color kept for errors and warnings. red-team: red-black, deep crimson and ember.",
       "default": "packet-trace",
       "options": [
         "packet-trace",
         "zero-day",
         "cold-boot",
-        "black-ice"
+        "black-ice",
+        "red-team"
       ]
     },
     "look": {
@@ -42,7 +43,7 @@
     "skin": {
       "type": "string",
       "title": "Transcript skin",
-      "description": "apply: switch the skins mod to the variant's skin when you pick a variant. keep: save the four Netrunner skins but leave your current skin alone.",
+      "description": "apply: switch the skins mod to the variant's skin when you pick a variant. keep: save the five Netrunner skins but leave your current skin alone.",
       "default": "apply",
       "options": [
         "apply",

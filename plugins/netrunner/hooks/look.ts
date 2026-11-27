@@ -1,5 +1,5 @@
 // The whole app's look in the desktop and mobile apps: graphite (or green, steel,
-// red-black) surfaces from the variant, and a slow network map behind the conversation.
+// black, red-black) surfaces from the variant, and a slow network map behind the conversation.
 // Based on the Packet Trace look. The terminal draws no look; nothing here runs there.
 
 import type { ThemeSetArgs } from 'claude-code'

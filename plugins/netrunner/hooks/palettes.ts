@@ -2,7 +2,7 @@
 // the skin the skins mod draws the transcript with, plus a palette line for the
 // filetree mod. Pure data: nothing here touches the engine.
 
-export type VariantId = 'packet-trace' | 'zero-day' | 'cold-boot' | 'black-ice'
+export type VariantId = 'packet-trace' | 'zero-day' | 'cold-boot' | 'black-ice' | 'red-team'
 
 /** The band's colors. */
 export type BandColors = {
@@ -136,11 +136,36 @@ export const VARIANTS: Record<VariantId, Variant> = {
     filetree:
       'fg=#dce6f0 bg=#0a0f16 accent=#67e8f9 muted=#8394a8 urgent=#fb7185 selection=#16303a hover=#121a24 jump=#a5b4fc added=#86efac modified=#93c5fd renamed=#a5b4fc add=#86efac del=#fb7185',
   },
-  // Red-black, deep crimson, ember highlights. Danger stays the brightest red, so a
-  // failure still stands out against the crimson accent.
+  // Black and white: near-black surfaces, white and grey everything else. Color is kept
+  // only where it means something: red for errors and HIGH, amber for warnings, green for
+  // success. (Before 1.6.0 this was the crimson palette now under Red Team.)
   'black-ice': {
     id: 'black-ice',
     label: 'Netrunner: Black ICE',
+    band: {
+      bg: '#0e0e0f', text: '#e8e8e8', muted: '#8c8c8c', empty: '#242426', line: '#1a1a1c',
+      accent: '#f2f2f2', second: '#a6a6a6', warn: '#e8b44c', err: '#ff5c5c',
+      warm: '#d0d0d0', cold: '#6b6b6b', ink: '#0a0a0b', glow: '#ffffff',
+    },
+    look: {
+      surfaces: ['#0a0a0b', '#0e0e0f', '#131314', '#18181a'],
+      text: ['#ececec', '#b8b8b8', '#8c8c8c'],
+      roles: { accent: '#f2f2f2', danger: '#ff5c5c', success: '#9bd86a', warning: '#e8b44c', pro: '#bdbdbd' },
+      scene: { link: '#d9d9d9', packet: '#ffffff', dots: '#9a9a9a', shade: '#030303' },
+    },
+    skin: {
+      user: '#f2f2f2', fg: '#e8e8e8', muted: '#8c8c8c', surface: '#131314', zebra: '#0e0e0f',
+      ok: '#9bd86a', err: '#ff5c5c', warn: '#e8b44c',
+      read: '#d9d9d9', write: '#ffffff', run: '#b0b0b0', search: '#c8c8c8', web: '#a0a0a0', mcp: '#e0e0e0', other: '#9a9a9a',
+    },
+    filetree:
+      'fg=#e8e8e8 bg=#0a0a0b accent=#f2f2f2 muted=#8c8c8c urgent=#ff5c5c selection=#2a2a2c hover=#18181a jump=#bdbdbd added=#9bd86a modified=#c8c8c8 renamed=#bdbdbd add=#9bd86a del=#ff5c5c',
+  },
+  // Red-black, deep crimson, ember highlights (Black ICE's palette before 1.6.0). Danger
+  // stays the brightest red, so a failure still stands out against the crimson accent.
+  'red-team': {
+    id: 'red-team',
+    label: 'Netrunner: Red Team',
     band: {
       bg: '#130909', text: '#f0dcdc', muted: '#9a7f7f', empty: '#2a1414', line: '#1f1010',
       accent: '#c8202a', second: '#ff6f4d', warn: '#f6c177', err: '#ff4d4d',
@@ -167,6 +192,8 @@ export const VARIANT_IDS = Object.keys(VARIANTS) as VariantId[]
 /**
  * filetree palette lines Netrunner once shipped and no longer does (Black ICE before
  * 1.3.0). A filetree palette holding one of these is still Netrunner's to replace.
+ * (Black ICE's crimson line from 1.3.0 to 1.5.x lives on as Red Team's, so it is still
+ * a current line.)
  */
 export const RETIRED_FILETREE = [
   'fg=#ecdff0 bg=#0d0811 accent=#ff3ea5 muted=#9a8aa6 urgent=#ff5c5c selection=#3a1530 hover=#1c1424 jump=#00e5ff added=#9bd86a modified=#b26bff renamed=#00e5ff add=#9bd86a del=#ff5c5c',

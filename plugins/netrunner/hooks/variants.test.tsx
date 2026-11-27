@@ -35,7 +35,7 @@ test('every variant has a look the desktop app will paint (no text under 3:1)', 
   }
 })
 
-test('the four skins are saved once and the chosen one applied once', { options: { variant: 'cold-boot' } }, async ($, on) => {
+test('the Netrunner skins are saved once and the chosen one applied once', { options: { variant: 'cold-boot' } }, async ($, on) => {
   const clock = mock.clock(on)
   engine(on)
   const calls: { action?: string; name?: string; apply?: boolean }[] = []
@@ -79,7 +79,7 @@ const fakeSkins = (on: any) => {
 
 const startup = { source: 'startup', cwd: '/repo', surface: 'desktop', isInteractive: true }
 
-test('a new, empty skins copy gets the four skins again and the variant applied', { options: { variant: 'black-ice' } }, async ($, on) => {
+test('a new, empty skins copy gets the Netrunner skins again and the variant applied', { options: { variant: 'black-ice' } }, async ($, on) => {
   const clock = mock.clock(on)
   engine(on)
   const mod = fakeSkins(on)
@@ -124,7 +124,7 @@ test('keep: the skins are saved but the current skin is left alone', { options: 
   }) as never)
   await $.session.start({ source: 'startup', cwd: '/repo', surface: 'desktop', isInteractive: true } as never)
   await clock.advance(2000)
-  expect(actions.filter(a => a === 'save').length).toBe(4)
+  expect(actions.filter(a => a === 'save').length).toBe(VARIANT_IDS.length)
   expect(actions).not.toContain('apply')
 })
 

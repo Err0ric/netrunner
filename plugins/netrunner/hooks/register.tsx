@@ -23,7 +23,7 @@ import { lookFor, lookModeOf, sceneName, sceneSvg } from './look'
 /** The skins mod's tool: Netrunner saves its four skins through it. */
 const SKINS_TOOL = 'mcp__skins__design'
 /** Bump when a variant's skin changes, so the next start saves the four again. */
-const SKIN_SET = 'netrunner-skins-2'
+const SKIN_SET = 'netrunner-skins-3'
 
 /** The Netrunner skins the skins mod says it holds, or null when it would not say. */
 const madeSkins = async ($: EngineInterface): Promise<string[] | null> => {
@@ -560,17 +560,18 @@ export const register: Register = (on, options) => {
     // While the card is open, one dot per variant sits just left of the fold glyph, on the
     // row that is already there: no row of its own. Each dot is its variant's accent; the
     // current one is ringed. A press saves the option and the reload repaints everything.
+    // One small circle per variant in its accent color, no spacers between them: a desktop
+    // draws each Button as a native button, so the circle alone is the smallest it gets.
     const dots = open
-      ? VARIANT_IDS.flatMap((id, i) => [
-          i > 0 ? <Text key={`vgap-${id}`}> </Text> : null,
+      ? VARIANT_IDS.map(id => (
           <Button key={`variant-${id}`} label={shortName(id)} plain onPress={() => (id === variant ? undefined : pickVariant($, id))}>
-            <Text color={VARIANTS[id].band.accent} bold={id === variant}>{id === variant ? '◉' : '●'}</Text>
-          </Button>,
-        ])
+            <Text color={VARIANTS[id].band.accent} bold={id === variant}>{id === variant ? '◉' : '•'}</Text>
+          </Button>
+        ))
       : []
     const button = Svg ? (
       <Box key="fold" flexDirection="row" flexShrink={0} alignItems="flex-start">
-        {dots.length ? <Box key="variants" flexDirection="row" flexShrink={0} marginRight={2}>{dots}</Box> : null}
+        {dots.length ? <Box key="variants" flexDirection="row" flexShrink={0} marginRight={1}>{dots}</Box> : null}
         {/* One dim glyph instead of a full button; the label still names it for readers. */}
         <Button key="cache-fold" label={open ? 'Hide' : 'Show'} plain dimColor onPress={toggle}>
           {open ? '▴' : '▾'}
