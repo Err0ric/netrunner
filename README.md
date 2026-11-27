@@ -2,7 +2,9 @@
 
 **Netrunner is a dark cyber theme for the Claude Code client** (the Claude desktop app's Code tab and the `claude` terminal) on **Windows, macOS and Linux**. It gives Claude Code the whole app's colors with a slow network-map background, a status band above the prompt, animated hacker crabs for your subagents, a WAITING line so you can see when a session is still working, funny tech spinner words, and four color variants.
 
-![Netrunner: Packet Trace](docs/netrunner-packet-trace.svg)
+![Netrunner in the Claude desktop app, cycling through Packet Trace, Zero Day, Cold Boot and Black ICE](docs/netrunner-hero.svg)
+
+*The Claude Code desktop app with Netrunner, cycling through its four variants. The conversation is a made-up example.*
 
 ## Color variants
 
