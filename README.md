@@ -1,6 +1,6 @@
 # Netrunner: a hacker theme for Claude Code
 
-**Netrunner is a dark, cyberpunk / hacker theme for the Claude Code client** (the Claude desktop app's Code tab and the `claude` terminal) on **Windows, macOS and Linux**. It gives Claude Code a status band above the prompt, animated hacker crabs for your subagents, a WAITING line so you can see when a session is still working, funny hacker spinner words, and four color variants.
+**Netrunner is a dark, cyberpunk / hacker theme for the Claude Code client** (the Claude desktop app's Code tab and the `claude` terminal) on **Windows, macOS and Linux**. It gives Claude Code the whole app's colors with a slow network-map background, a status band above the prompt, animated hacker crabs for your subagents, a WAITING line so you can see when a session is still working, funny hacker spinner words, and four color variants.
 
 ![Netrunner: Packet Trace](docs/netrunner-packet-trace.svg)
 
@@ -18,6 +18,7 @@
 
 ## What you get
 
+- **App look and background**: in the desktop app, the variant colors the whole window (page, cards, panels, menus, text and code highlighting) and draws a sparse network map behind the conversation, with packets drifting along its links and a node that pings. It moves on slow 12 to 70 second loops, stays in the corners away from the words, and holds still if your system asks for reduced motion or you set `look` to `still`.
 - **Status band above the prompt**: how much of your 7-day and 5-hour usage is used (amber at 60%, red with HIGH at 85%), and the prompt cache: **WARM** for an hour after the last request, then **COLD** with what the next message costs to re-cache. **Show** opens a card with the details.
 - **WAITING line**: when a turn ends with work still running (a background command, a background agent, a monitor, a workflow or a scheduled wake-up), the band says what the session is waiting on and for how long, so a session that is waiting no longer looks finished.
 - **Sweep**: a light runs along the band whenever anything in the session is running (a turn, waiting work or subagents) and stops when nothing is.
@@ -50,12 +51,13 @@ In a terminal session, open `/config` and find **Netrunner**:
 | Option | Values | Default |
 | --- | --- | --- |
 | `variant` | `packet-trace`, `zero-day`, `cold-boot`, `black-ice` | `packet-trace` |
+| `look` | `animated`: the variant's colors for the whole app and the moving network map. `still`: the same, held still. `off`: keep the app's own colors and background | `animated` |
 | `skin` | `apply` switches the transcript skin when you pick a variant; `keep` saves the skins but leaves yours alone | `apply` |
 
 Or in `~/.claude/settings.json` (Windows: `%USERPROFILE%\.claude\settings.json`):
 
 ```json
-{ "pluginConfigs": { "netrunner@netrunner": { "options": { "variant": "zero-day" } } } }
+{ "pluginConfigs": { "netrunner@netrunner": { "options": { "variant": "zero-day", "look": "still" } } } }
 ```
 
 `netrunner-crew` has `autoOpen` (`off` by default: the panel opens only from `×N` or `/crew`; `savvy` or `any` open it by itself), `finished` (`show` or `hide` finished agents) and `language` (`auto`, `en`, `ru`, `he`).
@@ -75,7 +77,7 @@ If you use the [filetree](https://github.com/data-goblin/claude-code-filetree) m
 
 ## Platforms
 
-Netrunner is a Claude Code mod: it runs inside Claude Code's own engine and reaches nothing outside it except through Claude Code, so the same files run on **Windows, macOS and Linux**, in the **desktop app** (animated drawings) and the **terminal** (a text version of the band). Animations stop when your system asks for reduced motion.
+Netrunner is a Claude Code mod: it runs inside Claude Code's own engine and reaches nothing outside it except through Claude Code, so the same files run on **Windows, macOS and Linux**, in the **desktop app** (animated drawings) and the **terminal** (a text version of the band). The app look and background draw in the desktop and mobile apps; a terminal keeps its own background, so set that in your terminal app. Only one mod can set the app's look at a time: if you use another theme mod, set `look` to `off` here or turn the other one off. Animations stop when your system asks for reduced motion.
 
 ## Credits
 
@@ -91,4 +93,4 @@ See [NOTICE.md](NOTICE.md). Not affiliated with Anthropic.
 
 ---
 
-*Keywords: Claude Code theme, Claude Code themes, Claude Code skin, Claude Code dark theme, Claude Code hacker theme, Claude Code cyberpunk theme, Claude Code status line, Claude Code usage meter, Claude Code prompt cache, Claude Code subagents, Claude Code plugin, Claude Code mod, Claude desktop app theme, Claude Code terminal theme, Windows, macOS, Linux.*
+*Keywords: Claude Code theme, Claude Code themes, Claude Code skin, Claude Code dark theme, Claude Code background, Claude desktop app background, Claude Code animated background, Claude Code hacker theme, Claude Code cyberpunk theme, Claude Code status line, Claude Code usage meter, Claude Code prompt cache, Claude Code subagents, Claude Code plugin, Claude Code mod, Claude desktop app theme, Claude Code terminal theme, Windows, macOS, Linux.*

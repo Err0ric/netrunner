@@ -33,10 +33,23 @@ export type SkinPalette = Record<
   string
 >
 
+/** The whole app's look in the desktop and mobile apps: its surfaces, text and roles
+ * (for makeColors), and the network map drawn behind the conversation. */
+export type AppLook = {
+  /** The page, cards, panels and menus, darkest first. */
+  surfaces: [string, string, string, string]
+  /** Primary, secondary and muted text. */
+  text: [string, string, string]
+  roles: Record<'accent' | 'danger' | 'success' | 'warning' | 'pro', string>
+  /** The backdrop: the map's links and nodes, the packets on them, the dot grid, the edge shade. */
+  scene: { link: string; packet: string; dots: string; shade: string }
+}
+
 export type Variant = {
   id: VariantId
   label: string
   band: BandColors
+  look: AppLook
   skin: SkinPalette
   /** For filetree's `palette` option. */
   filetree: string
@@ -63,6 +76,12 @@ export const VARIANTS: Record<VariantId, Variant> = {
       accent: '#3ddcb4', second: '#6cb8d6', warn: '#e8b44c', err: '#ff5c6c',
       warm: '#9d8cff', cold: '#7f9cb8', ink: '#0b0f12', glow: '#e9fffa',
     },
+    look: {
+      surfaces: ['#0b0f12', '#10161a', '#141b20', '#182027'],
+      text: ['#dae7e4', '#aebfbc', '#869a96'],
+      roles: { accent: '#3ddcb4', danger: '#ff5c6c', success: '#9bd86a', warning: '#e8b44c', pro: '#9d8cff' },
+      scene: { link: '#3ddcb4', packet: '#8ff7dc', dots: '#9fc2bb', shade: '#05080a' },
+    },
     skin: {
       user: '#3ddcb4', fg: '#dae7e4', muted: '#869a96', surface: '#141b20', zebra: '#10161a',
       ok: '#9bd86a', err: '#ff5c6c', warn: '#e8b44c',
@@ -79,6 +98,12 @@ export const VARIANTS: Record<VariantId, Variant> = {
       bg: '#0f1512', text: '#c8d3cc', muted: '#7a958a', empty: '#1c2621', line: '#16201b',
       accent: '#4af58a', second: '#5ccfe6', warn: '#ffb454', err: '#ff3b5c',
       warm: '#d77bff', cold: '#6f8f9c', ink: '#08100b', glow: '#eaffef',
+    },
+    look: {
+      surfaces: ['#0b100d', '#0f1512', '#131b17', '#16201b'],
+      text: ['#dce8e0', '#aabbb1', '#80998e'],
+      roles: { accent: '#4af58a', danger: '#ff3b5c', success: '#7ee787', warning: '#ffb454', pro: '#d77bff' },
+      scene: { link: '#4af58a', packet: '#b8ffd0', dots: '#9fc2a8', shade: '#040705' },
     },
     skin: {
       user: '#4af58a', fg: '#c8d3cc', muted: '#7a958a', surface: '#131b17', zebra: '#0f1512',
@@ -97,6 +122,12 @@ export const VARIANTS: Record<VariantId, Variant> = {
       accent: '#67e8f9', second: '#93c5fd', warn: '#fbbf24', err: '#fb7185',
       warm: '#a5b4fc', cold: '#64748b', ink: '#0a0f16', glow: '#f0fdff',
     },
+    look: {
+      surfaces: ['#0a0f16', '#0f141b', '#131a22', '#17202b'],
+      text: ['#dce6f0', '#b0bfcf', '#8394a8'],
+      roles: { accent: '#67e8f9', danger: '#fb7185', success: '#86efac', warning: '#fbbf24', pro: '#a5b4fc' },
+      scene: { link: '#67e8f9', packet: '#cffafe', dots: '#9fb6c8', shade: '#04070b' },
+    },
     skin: {
       user: '#67e8f9', fg: '#dce6f0', muted: '#8394a8', surface: '#131a22', zebra: '#0f151c',
       ok: '#86efac', err: '#fb7185', warn: '#fbbf24',
@@ -113,6 +144,12 @@ export const VARIANTS: Record<VariantId, Variant> = {
       bg: '#140f19', text: '#ecdff0', muted: '#9a8aa6', empty: '#261c2e', line: '#1e1625',
       accent: '#ff3ea5', second: '#b26bff', warn: '#f6c177', err: '#ff5c5c',
       warm: '#00e5ff', cold: '#7a6c9c', ink: '#0d0811', glow: '#fff0f8',
+    },
+    look: {
+      surfaces: ['#0d0811', '#140f19', '#1a1320', '#1e1625'],
+      text: ['#ecdff0', '#c4b4cc', '#9a8aa6'],
+      roles: { accent: '#ff3ea5', danger: '#ff5c5c', success: '#9bd86a', warning: '#f6c177', pro: '#b26bff' },
+      scene: { link: '#ff3ea5', packet: '#00e5ff', dots: '#c2a3b8', shade: '#060308' },
     },
     skin: {
       user: '#ff3ea5', fg: '#ecdff0', muted: '#9a8aa6', surface: '#1a1320', zebra: '#140f19',

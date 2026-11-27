@@ -9,6 +9,7 @@ import {
 import { DONE, SPINNER, VARIANT_IDS, VARIANTS, skinName, variantOf } from './palettes'
 import type { VariantId } from './palettes'
 import type { CacheView } from './cache-art'
+import { lookFor, lookModeOf, sceneName, sceneSvg } from './look'
 
 // Netrunner: a band above the prompt with pill bars for how much of each usage window
 // is USED (7-day, then 5-hour; amber at 60%, red with HIGH at 85%), the prompt cache
@@ -158,8 +159,22 @@ export const register: Register = (on, options) => {
   const variant = variantOf(options.variant).id
   useVariant(variant)
   const applySkin = options.skin !== 'keep'
+  const lookMode = lookModeOf(options.look)
+  const scene = lookMode === 'off' ? '' : sceneSvg(variantOf(variant).look, lookMode === 'still')
 
   on('session.start', async ($, e, next) => {
+    // The whole app's look (desktop and mobile): the variant's surfaces and the network map.
+    if (lookMode !== 'off') {
+      const { look, problems } = lookFor(variantOf(variant))
+      const unpainted = problems.find(line => line.startsWith("Desktop won't paint"))
+      if (unpainted !== undefined) void $.ui.toast(`Netrunner: ${unpainted}`)
+      // A host that can't take a look must not cost the band its start.
+      try {
+        await $.theme.set(look)
+      } catch {
+        /* the app keeps its own look */
+      }
+    }
     // The skins mod registers its tool as its own session starts: give it a moment.
     $.clock.after(1500, async () => {
       const r = await syncSkins($, variant, applySkin)
@@ -171,6 +186,14 @@ export const register: Register = (on, options) => {
     await pull($)
     $.clock.every(TICK_MS, () => $.ui.invalidate('ui.render'))
     return next(e)
+  })
+
+  on('ui.render', { component: 'Backdrop' }, ($, e, next) => {
+    if (!scene || (e.surface !== 'desktop' && e.surface !== 'mobile') || e.props.scene !== sceneName(variantOf(variant))) {
+      return next(e)
+    }
+    const { Svg } = $.ui.resolve(e)
+    return <Svg source={scene} alt="A sparse network map with packets drifting slowly between nodes" isInteractive />
   })
 
   on('session.measure', async ($, e, next) => {

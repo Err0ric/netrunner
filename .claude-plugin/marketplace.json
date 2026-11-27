@@ -9,7 +9,7 @@
     {
       "name": "netrunner",
       "source": "./plugins/netrunner",
-      "description": "The Netrunner theme: status band (usage, prompt cache, WAITING line, sweep) and four transcript skins: Packet Trace, Zero Day, Cold Boot, Black ICE.",
+      "description": "The Netrunner theme: the whole app's colors with a slow network-map background, a status band (usage, prompt cache, WAITING line, sweep) and four transcript skins: Packet Trace, Zero Day, Cold Boot and Black ICE.",
       "category": "themes",
       "keywords": [
         "claude-code",
@@ -30,7 +30,9 @@
         "terminal",
         "windows",
         "macos",
-        "linux"
+        "linux",
+        "background",
+        "app-theme"
       ]
     },
     {
