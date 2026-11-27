@@ -1,0 +1,69 @@
+name: platforms
+
+# On macOS, Linux and Windows: validate the marketplace and both plugins, run both test
+# suites, then install netrunner fresh (as a new user would) and check that it brings
+# netrunner-crew, skins and filetree with it and that all four load.
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: platforms-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  check:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 20
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 22
+      - name: Install Claude Code 2.1.330
+        run: npm install -g @anthropic-ai/claude-code@2.1.330 && claude --version
+      - name: Validate the marketplace and both plugins
+        run: |
+          claude plugin validate .
+          claude plugin validate plugins/netrunner
+          claude plugin validate plugins/netrunner-crew
+      - name: netrunner tests on this OS
+        run: claude plugin test plugins/netrunner
+      - name: netrunner-crew tests on this OS
+        run: claude plugin test plugins/netrunner-crew
+      - name: Fresh install brings all four plugins, and all four load
+        env:
+          CLAUDE_CONFIG_DIR: ${{ runner.temp }}/fresh-config
+        run: |
+          mkdir -p "$CLAUDE_CONFIG_DIR"
+          claude plugin marketplace add "$GITHUB_WORKSPACE"
+          claude plugin install netrunner@netrunner --scope user
+          claude plugin list --json > "$RUNNER_TEMP/plugins.json"
+          node -e '
+            const list = JSON.parse(require("fs").readFileSync(process.argv[1], "utf8"))
+            const want = ["netrunner@netrunner", "netrunner-crew@netrunner", "skins@netrunner", "filetree@netrunner"]
+            let bad = 0
+            for (const id of want) {
+              const p = list.find(x => x.id === id)
+              const errors = p ? Object.keys(p).filter(k => /error/i.test(k) && p[k]) : []
+              const ok = p && p.enabled === true && errors.length === 0
+              console.log(`${ok ? "ok  " : "FAIL"} ${id} ${p ? "v" + p.version : "not installed"}${errors.length ? " " + JSON.stringify(errors.map(k => p[k])) : ""}`)
+              if (!ok) bad++
+            }
+            process.exit(bad ? 1 : 0)
+          ' "$RUNNER_TEMP/plugins.json"
