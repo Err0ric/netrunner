@@ -74,6 +74,11 @@ const fold = atom({ plugin: 'netrunner', key: 'fold' } as const, null as Fold | 
 // turn starts, so "waiting" no longer looks the same as "finished".
 const waiting = atom({ plugin: 'netrunner', key: 'waiting' } as const, [] as WaitItem[])
 
+// Whether a main-thread turn is running, from its own start and end. The band's
+// `isWorking` prop says the same, but the desktop app can hand the band false for
+// the whole turn, which left the sweep off there; this keeps it running.
+const working = atom({ plugin: 'netrunner', key: 'working' } as const, false as boolean)
+
 type TaskLike = { id?: string; type?: string; description?: string; command?: string; name?: string; agent_type?: string }
 type CronLike = { id?: string; recurring?: boolean }
 
@@ -267,6 +272,8 @@ export const register: Register = (on, options) => {
     const r = await next(e)
     const ev = e as unknown as { agent_id?: string; background_tasks?: TaskLike[]; session_crons?: CronLike[] }
     if (ev.agent_id) return r
+    // The main thread stopped: no turn is running, whatever turn.complete said.
+    await update($, working, () => false)
     const now = await $.clock.now()
     const prev = await read($, waiting)
     const seen = new Map(prev.map(w => [w.id, w.since]))
@@ -280,7 +287,10 @@ export const register: Register = (on, options) => {
 
   // A new main-thread turn is working, not waiting: the spinner says so. The next stop refills the list.
   on('turn.start', async ($, e, next) => {
-    if (!e.agentId) await update($, waiting, () => [])
+    if (!e.agentId) {
+      await update($, waiting, () => [])
+      await update($, working, () => true)
+    }
     return next(e)
   })
 
@@ -294,6 +304,8 @@ export const register: Register = (on, options) => {
   })
 
   on('turn.complete', async ($, e, next) => {
+    // Cleared first, so a failing answer below cannot leave the sweep running.
+    if (!e.agentId) await update($, working, () => false)
     const r = await next(e)
     if (e.agentId) return r
     // Catch up on the skins when the mod was not ready at start: cheap once done.
@@ -385,7 +397,7 @@ export const register: Register = (on, options) => {
     // running: a turn in progress, work the session is WAITING on, or subagents (the crab
     // row beneath). It stops only when nothing is.
     const crewBelow = (below as { props?: { key?: string } } | null)?.props?.key === 'savvy-crew-wrap'
-    const busy = Boolean(e.props.isWorking) || waits.length > 0 || crewBelow
+    const busy = Boolean(e.props.isWorking) || (await read($, working)) || waits.length > 0 || crewBelow
     // The desktop band is about 8 CSS px a reported column (bandPx's 12 is the card's
     // scale): a sweep drawn wider than the band is cropped, and its light spends most of
     // each pass off the visible part.
