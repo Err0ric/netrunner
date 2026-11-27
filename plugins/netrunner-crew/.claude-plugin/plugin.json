@@ -1,0 +1,71 @@
+{
+  "name": "netrunner-crew",
+  "version": "1.0.0",
+  "description": "Netrunner crew: walking hacker crabs for your running subagents, a one-line crew row above the prompt (it joins the Netrunner WAITING line), a progress bar for /savvy-flow, and an agents panel (/crew). A fork of savvy-progress by johnnyvizz (MIT).",
+  "author": {
+    "name": "Err0ric",
+    "url": "https://github.com/Err0ric"
+  },
+  "types": "./types/index.d.ts",
+  "userConfig": {
+    "language": {
+      "type": "string",
+      "title": "Panel language",
+      "description": "auto follows Claude Code's language setting, then the system locale; en, ru or he (Hebrew, drawn right to left)",
+      "default": "auto",
+      "options": [
+        "auto",
+        "en",
+        "ru",
+        "he"
+      ]
+    },
+    "autoOpen": {
+      "type": "string",
+      "title": "Open the agents panel",
+      "description": "savvy: when a savvy-flow worker starts or a plan is reported; any: also when any other subagent starts; off: never opens by itself (the progress bar above the prompt still shows, and /crew opens the panel)",
+      "default": "off",
+      "options": [
+        "savvy",
+        "any",
+        "off"
+      ]
+    },
+    "finished": {
+      "type": "string",
+      "title": "Finished agents",
+      "description": "show: list finished agents under the running ones; hide: list only agents that are still running",
+      "default": "show",
+      "options": [
+        "show",
+        "hide"
+      ]
+    }
+  },
+  "homepage": "https://github.com/Err0ric/netrunner",
+  "repository": "https://github.com/Err0ric/netrunner",
+  "license": "MIT",
+  "keywords": [
+    "claude-code",
+    "claude-code-theme",
+    "claude-code-plugin",
+    "claude-code-mod",
+    "claude-code-skin",
+    "theme",
+    "dark-theme",
+    "hacker-theme",
+    "cyberpunk",
+    "status-line",
+    "statusline",
+    "usage-meter",
+    "prompt-cache",
+    "subagents",
+    "desktop",
+    "terminal",
+    "windows",
+    "macos",
+    "linux",
+    "agents-panel",
+    "progress-bar"
+  ]
+}

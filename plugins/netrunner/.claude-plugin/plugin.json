@@ -1,0 +1,58 @@
+{
+  "name": "netrunner",
+  "version": "1.0.0",
+  "description": "Netrunner: a hacker theme for Claude Code. A status band above the prompt (usage bars, prompt cache WARM/COLD, a WAITING line and a sweep while anything runs) and four matching transcript skins: Packet Trace, Zero Day, Cold Boot and Black ICE.",
+  "author": {
+    "name": "Err0ric",
+    "url": "https://github.com/Err0ric"
+  },
+  "homepage": "https://github.com/Err0ric/netrunner",
+  "repository": "https://github.com/Err0ric/netrunner",
+  "license": "MIT",
+  "types": "./types/index.d.ts",
+  "userConfig": {
+    "variant": {
+      "type": "string",
+      "title": "Color variant",
+      "description": "packet-trace: graphite, teal and violet. zero-day: terminal green and magenta. cold-boot: steel, ice cyan and periwinkle. black-ice: plum, hot magenta and electric purple.",
+      "default": "packet-trace",
+      "options": [
+        "packet-trace",
+        "zero-day",
+        "cold-boot",
+        "black-ice"
+      ]
+    },
+    "skin": {
+      "type": "string",
+      "title": "Transcript skin",
+      "description": "apply: switch the skins mod to the variant's skin when you pick a variant. keep: save the four Netrunner skins but leave your current skin alone.",
+      "default": "apply",
+      "options": [
+        "apply",
+        "keep"
+      ]
+    }
+  },
+  "keywords": [
+    "claude-code",
+    "claude-code-theme",
+    "claude-code-plugin",
+    "claude-code-mod",
+    "claude-code-skin",
+    "theme",
+    "dark-theme",
+    "hacker-theme",
+    "cyberpunk",
+    "status-line",
+    "statusline",
+    "usage-meter",
+    "prompt-cache",
+    "subagents",
+    "desktop",
+    "terminal",
+    "windows",
+    "macos",
+    "linux"
+  ]
+}

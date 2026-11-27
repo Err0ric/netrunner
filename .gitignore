@@ -1,0 +1,5 @@
+.DS_Store
+*.bak*
+*.log
+.in_use/
+.claude-plugin/types/

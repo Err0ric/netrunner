@@ -1,0 +1,133 @@
+// Netrunner's four looks. Each variant colors the band above the prompt and carries
+// the skin the skins mod draws the transcript with, plus a palette line for the
+// filetree mod. Pure data: nothing here touches the engine.
+
+export type VariantId = 'packet-trace' | 'zero-day' | 'cold-boot' | 'black-ice'
+
+/** The band's colors. */
+export type BandColors = {
+  bg: string
+  text: string
+  muted: string
+  /** A bar's empty track. */
+  empty: string
+  line: string
+  /** The 7-day bar, WAITING and the sweep. */
+  accent: string
+  /** The 5-hour bar. */
+  second: string
+  warn: string
+  err: string
+  /** The prompt cache's two states. */
+  warm: string
+  cold: string
+  /** Text on a filled chip. */
+  ink: string
+  /** The sweep's bright head. */
+  glow: string
+}
+
+/** The skins mod's slots: see `/skin` or the skins README. */
+export type SkinPalette = Record<
+  'user' | 'fg' | 'muted' | 'surface' | 'zebra' | 'ok' | 'err' | 'warn' | 'read' | 'write' | 'run' | 'search' | 'web' | 'mcp' | 'other',
+  string
+>
+
+export type Variant = {
+  id: VariantId
+  label: string
+  band: BandColors
+  skin: SkinPalette
+  /** For filetree's `palette` option. */
+  filetree: string
+}
+
+/** What the spinner says while Claude works, and after it, in every variant. */
+export const SPINNER = [
+  'Hacking the mainframe', 'Downloading more RAM', 'Bypassing the firewall', 'Blaming DNS',
+  'Typing very fast', 'Sudo-ing politely', 'Grepping for meaning', 'Pinging the void',
+  'Spoofing confidence', 'Rubber-ducking', 'Reversing the polarity', 'Routing via 7 proxies',
+]
+export const DONE = [
+  'Pwned', "Sudo'd", 'Rooted', 'Blamed DNS', 'Hacked the mainframe', 'Downloaded more RAM',
+  'Rubber-ducked', 'Exfiltrated', 'Typed very fast', 'Escalated', 'Grepped', 'Rebooted',
+]
+
+export const VARIANTS: Record<VariantId, Variant> = {
+  // Graphite, phosphor teal, violet highlights.
+  'packet-trace': {
+    id: 'packet-trace',
+    label: 'Netrunner: Packet Trace',
+    band: {
+      bg: '#10161a', text: '#dae7e4', muted: '#869a96', empty: '#1f2a31', line: '#182027',
+      accent: '#3ddcb4', second: '#6cb8d6', warn: '#e8b44c', err: '#ff5c6c',
+      warm: '#9d8cff', cold: '#7f9cb8', ink: '#0b0f12', glow: '#e9fffa',
+    },
+    skin: {
+      user: '#3ddcb4', fg: '#dae7e4', muted: '#869a96', surface: '#141b20', zebra: '#10161a',
+      ok: '#9bd86a', err: '#ff5c6c', warn: '#e8b44c',
+      read: '#8ff7dc', write: '#ff79c6', run: '#6cb8d6', search: '#9d8cff', web: '#7aa2f7', mcp: '#3ddcb4', other: '#b9adff',
+    },
+    filetree:
+      'fg=#dae7e4 bg=#0b0f12 accent=#3ddcb4 muted=#869a96 urgent=#ff5c6c selection=#16302b hover=#131d22 jump=#9d8cff added=#9bd86a modified=#6cb8d6 renamed=#9d8cff add=#9bd86a del=#ff5c6c',
+  },
+  // Terminal green on near-black, magenta highlights.
+  'zero-day': {
+    id: 'zero-day',
+    label: 'Netrunner: Zero Day',
+    band: {
+      bg: '#0f1512', text: '#c8d3cc', muted: '#7a958a', empty: '#1c2621', line: '#16201b',
+      accent: '#4af58a', second: '#5ccfe6', warn: '#ffb454', err: '#ff3b5c',
+      warm: '#d77bff', cold: '#6f8f9c', ink: '#08100b', glow: '#eaffef',
+    },
+    skin: {
+      user: '#4af58a', fg: '#c8d3cc', muted: '#7a958a', surface: '#131b17', zebra: '#0f1512',
+      ok: '#7ee787', err: '#ff3b5c', warn: '#ffb454',
+      read: '#a6f5c4', write: '#ff5fd2', run: '#5ccfe6', search: '#b48cff', web: '#5c9cff', mcp: '#d77bff', other: '#9aa8a0',
+    },
+    filetree:
+      'fg=#c8d3cc bg=#0b100d accent=#4af58a muted=#7a958a urgent=#ff3b5c selection=#173322 hover=#121a15 jump=#d77bff added=#7ee787 modified=#5ccfe6 renamed=#d77bff add=#7ee787 del=#ff3b5c',
+  },
+  // Steel blue, ice cyan, periwinkle highlights.
+  'cold-boot': {
+    id: 'cold-boot',
+    label: 'Netrunner: Cold Boot',
+    band: {
+      bg: '#0f141b', text: '#dce6f0', muted: '#8394a8', empty: '#1d2632', line: '#17202b',
+      accent: '#67e8f9', second: '#93c5fd', warn: '#fbbf24', err: '#fb7185',
+      warm: '#a5b4fc', cold: '#64748b', ink: '#0a0f16', glow: '#f0fdff',
+    },
+    skin: {
+      user: '#67e8f9', fg: '#dce6f0', muted: '#8394a8', surface: '#131a22', zebra: '#0f151c',
+      ok: '#86efac', err: '#fb7185', warn: '#fbbf24',
+      read: '#a5f3fc', write: '#f0abfc', run: '#93c5fd', search: '#a5b4fc', web: '#7dd3fc', mcp: '#67e8f9', other: '#c4b5fd',
+    },
+    filetree:
+      'fg=#dce6f0 bg=#0a0f16 accent=#67e8f9 muted=#8394a8 urgent=#fb7185 selection=#16303a hover=#121a24 jump=#a5b4fc added=#86efac modified=#93c5fd renamed=#a5b4fc add=#86efac del=#fb7185',
+  },
+  // Plum black, hot magenta, electric purple, cyan highlights.
+  'black-ice': {
+    id: 'black-ice',
+    label: 'Netrunner: Black ICE',
+    band: {
+      bg: '#140f19', text: '#ecdff0', muted: '#9a8aa6', empty: '#261c2e', line: '#1e1625',
+      accent: '#ff3ea5', second: '#b26bff', warn: '#f6c177', err: '#ff5c5c',
+      warm: '#00e5ff', cold: '#7a6c9c', ink: '#0d0811', glow: '#fff0f8',
+    },
+    skin: {
+      user: '#ff3ea5', fg: '#ecdff0', muted: '#9a8aa6', surface: '#1a1320', zebra: '#140f19',
+      ok: '#9bd86a', err: '#ff5c5c', warn: '#f6c177',
+      read: '#ff9ad5', write: '#00e5ff', run: '#b26bff', search: '#c9a3ff', web: '#7aa2f7', mcp: '#ff3ea5', other: '#d4b8e8',
+    },
+    filetree:
+      'fg=#ecdff0 bg=#0d0811 accent=#ff3ea5 muted=#9a8aa6 urgent=#ff5c5c selection=#3a1530 hover=#1c1424 jump=#00e5ff added=#9bd86a modified=#b26bff renamed=#00e5ff add=#9bd86a del=#ff5c5c',
+  },
+}
+
+export const VARIANT_IDS = Object.keys(VARIANTS) as VariantId[]
+
+/** The variant an option names; Packet Trace for anything else. */
+export const variantOf = (id: unknown): Variant => VARIANTS[id as VariantId] ?? VARIANTS['packet-trace']
+
+/** The skins mod's name for a variant's skin. */
+export const skinName = (id: VariantId): string => `netrunner-${id}`

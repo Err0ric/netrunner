@@ -1,0 +1,64 @@
+{
+  "name": "netrunner",
+  "owner": {
+    "name": "Err0ric",
+    "url": "https://github.com/Err0ric"
+  },
+  "description": "Netrunner: a hacker / cyberpunk theme for Claude Code (desktop app and terminal, Windows, macOS, Linux). A status band above the prompt, animated subagent crabs, and four color variants.",
+  "plugins": [
+    {
+      "name": "netrunner",
+      "source": "./plugins/netrunner",
+      "description": "The Netrunner theme: status band (usage, prompt cache, WAITING line, sweep) and four transcript skins: Packet Trace, Zero Day, Cold Boot, Black ICE.",
+      "category": "themes",
+      "keywords": [
+        "claude-code",
+        "claude-code-theme",
+        "claude-code-plugin",
+        "claude-code-mod",
+        "claude-code-skin",
+        "theme",
+        "dark-theme",
+        "hacker-theme",
+        "cyberpunk",
+        "status-line",
+        "statusline",
+        "usage-meter",
+        "prompt-cache",
+        "subagents",
+        "desktop",
+        "terminal",
+        "windows",
+        "macos",
+        "linux"
+      ]
+    },
+    {
+      "name": "netrunner-crew",
+      "source": "./plugins/netrunner-crew",
+      "description": "Walking hacker crabs for running subagents: a crew row above the prompt (it joins Netrunner's WAITING line) and an agents panel (/crew).",
+      "category": "themes",
+      "keywords": [
+        "claude-code",
+        "claude-code-theme",
+        "claude-code-plugin",
+        "claude-code-mod",
+        "claude-code-skin",
+        "theme",
+        "dark-theme",
+        "hacker-theme",
+        "cyberpunk",
+        "status-line",
+        "statusline",
+        "usage-meter",
+        "prompt-cache",
+        "subagents",
+        "desktop",
+        "terminal",
+        "windows",
+        "macos",
+        "linux"
+      ]
+    }
+  ]
+}
