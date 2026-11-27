@@ -164,6 +164,18 @@ export const VARIANTS: Record<VariantId, Variant> = {
 
 export const VARIANT_IDS = Object.keys(VARIANTS) as VariantId[]
 
+/**
+ * filetree palette lines Netrunner once shipped and no longer does (Black ICE before
+ * 1.3.0). A filetree palette holding one of these is still Netrunner's to replace.
+ */
+export const RETIRED_FILETREE = [
+  'fg=#ecdff0 bg=#0d0811 accent=#ff3ea5 muted=#9a8aa6 urgent=#ff5c5c selection=#3a1530 hover=#1c1424 jump=#00e5ff added=#9bd86a modified=#b26bff renamed=#00e5ff add=#9bd86a del=#ff5c5c',
+]
+
+/** Whether a filetree palette is empty or one Netrunner wrote: never someone's own. */
+export const isNetrunnerPalette = (value: string): boolean =>
+  value.trim() === '' || VARIANT_IDS.some(id => VARIANTS[id].filetree === value) || RETIRED_FILETREE.includes(value)
+
 /** The variant an option names; Packet Trace for anything else. */
 export const variantOf = (id: unknown): Variant => VARIANTS[id as VariantId] ?? VARIANTS['packet-trace']
 
