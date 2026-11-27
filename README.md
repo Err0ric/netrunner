@@ -16,7 +16,7 @@
 | Cold Boot | Black ICE |
 | --- | --- |
 | ![Cold Boot](docs/netrunner-cold-boot.svg) | ![Black ICE](docs/netrunner-black-ice.svg) |
-| Steel, ice cyan, periwinkle highlights | Plum black, hot magenta, electric purple |
+| Steel, ice cyan, periwinkle highlights | Red-black, deep crimson, ember highlights |
 
 ## What you get
 
@@ -87,7 +87,7 @@ If you use the [filetree](https://github.com/data-goblin/claude-code-filetree) m
 | Packet Trace | `fg=#dae7e4 bg=#0b0f12 accent=#3ddcb4 muted=#869a96 urgent=#ff5c6c selection=#16302b hover=#131d22 jump=#9d8cff added=#9bd86a modified=#6cb8d6 renamed=#9d8cff add=#9bd86a del=#ff5c6c` |
 | Zero Day | `fg=#c8d3cc bg=#0b100d accent=#4af58a muted=#7a958a urgent=#ff3b5c selection=#173322 hover=#121a15 jump=#d77bff added=#7ee787 modified=#5ccfe6 renamed=#d77bff add=#7ee787 del=#ff3b5c` |
 | Cold Boot | `fg=#dce6f0 bg=#0a0f16 accent=#67e8f9 muted=#8394a8 urgent=#fb7185 selection=#16303a hover=#121a24 jump=#a5b4fc added=#86efac modified=#93c5fd renamed=#a5b4fc add=#86efac del=#fb7185` |
-| Black ICE | `fg=#ecdff0 bg=#0d0811 accent=#ff3ea5 muted=#9a8aa6 urgent=#ff5c5c selection=#3a1530 hover=#1c1424 jump=#00e5ff added=#9bd86a modified=#b26bff renamed=#00e5ff add=#9bd86a del=#ff5c5c` |
+| Black ICE | `fg=#f0dcdc bg=#0c0606 accent=#e0262f muted=#9a7f7f urgent=#ff4d4d selection=#3a1214 hover=#1c0d0d jump=#ff6f4d added=#9bd86a modified=#ff9a8a renamed=#ff6f4d add=#9bd86a del=#ff4d4d` |
 
 ## Platforms
 
