@@ -4,12 +4,12 @@
     "name": "Err0ric",
     "url": "https://github.com/Err0ric"
   },
-  "description": "Netrunner: a cyber theme for Claude Code (desktop app and terminal, Windows, macOS, Linux). A status band above the prompt, animated subagent crabs, and four color variants.",
+  "description": "Netrunner: a cyber theme for Claude Code (desktop app and terminal, Windows, macOS, Linux). A status band above the prompt, animated subagent crabs, and five color variants.",
   "plugins": [
     {
       "name": "netrunner",
       "source": "./plugins/netrunner",
-      "description": "The Netrunner theme: the whole app's colors with a slow network-map background, a status band (usage, prompt cache, WAITING line, sweep) and four transcript skins: Packet Trace, Zero Day, Cold Boot and Black ICE.",
+      "description": "The Netrunner theme: the whole app's colors with a slow network-map background, a status band (usage, prompt cache, WAITING line, sweep) and five transcript skins: Packet Trace, Zero Day, Cold Boot, Black ICE and Red Team.",
       "category": "themes",
       "keywords": [
         "claude-code",
