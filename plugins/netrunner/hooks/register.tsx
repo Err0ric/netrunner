@@ -23,7 +23,7 @@ import { lookFor, lookModeOf, sceneName, sceneSvg } from './look'
 /** The skins mod's tool: Netrunner saves its four skins through it. */
 const SKINS_TOOL = 'mcp__skins__design'
 /** Bump when a variant's skin changes, so the next start saves the four again. */
-const SKIN_SET = 'netrunner-skins-1'
+const SKIN_SET = 'netrunner-skins-2'
 
 /**
  * Saves the four Netrunner skins into the skins mod once per SKIN_SET, and switches the

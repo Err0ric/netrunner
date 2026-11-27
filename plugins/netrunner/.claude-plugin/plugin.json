@@ -1,6 +1,6 @@
 {
   "name": "netrunner",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "Netrunner: a cyber theme for Claude Code. The whole app's look with a slow network-map background, a status band above the prompt (usage bars, prompt cache WARM/COLD, a WAITING line and a sweep while anything runs) and matching transcript skins, in four variants: Packet Trace, Zero Day, Cold Boot and Black ICE.",
   "author": {
     "name": "Err0ric",
@@ -14,7 +14,7 @@
     "variant": {
       "type": "string",
       "title": "Color variant",
-      "description": "packet-trace: graphite, teal and violet. zero-day: terminal green and magenta. cold-boot: steel, ice cyan and periwinkle. black-ice: plum, hot magenta and electric purple.",
+      "description": "packet-trace: graphite, teal and violet. zero-day: terminal green and magenta. cold-boot: steel, ice cyan and periwinkle. black-ice: red-black, deep crimson and ember.",
       "default": "packet-trace",
       "options": [
         "packet-trace",

@@ -1,5 +1,6 @@
 import { expect, mock, test } from 'claude-code/testing'
 
+import { lookFor } from './look'
 import { VARIANTS, VARIANT_IDS, skinName } from './palettes'
 
 const PLUGIN = 'netrunner'
@@ -26,6 +27,13 @@ for (const id of VARIANT_IDS) {
     for (const other of VARIANT_IDS.filter(o => o !== id)) expect(svgs).not.toContain(VARIANTS[other].band.accent)
   })
 }
+
+test('every variant has a look the desktop app will paint (no text under 3:1)', () => {
+  for (const id of VARIANT_IDS) {
+    const refused = lookFor(VARIANTS[id]).problems.filter(p => p.startsWith("Desktop won't paint"))
+    expect([id, refused]).toEqual([id, []])
+  }
+})
 
 test('the four skins are saved once and the chosen one applied once', { options: { variant: 'cold-boot' } }, async ($, on) => {
   const clock = mock.clock(on)

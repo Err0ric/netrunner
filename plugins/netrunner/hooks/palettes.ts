@@ -136,28 +136,29 @@ export const VARIANTS: Record<VariantId, Variant> = {
     filetree:
       'fg=#dce6f0 bg=#0a0f16 accent=#67e8f9 muted=#8394a8 urgent=#fb7185 selection=#16303a hover=#121a24 jump=#a5b4fc added=#86efac modified=#93c5fd renamed=#a5b4fc add=#86efac del=#fb7185',
   },
-  // Plum black, hot magenta, electric purple, cyan highlights.
+  // Red-black, deep crimson, ember highlights. Danger stays the brightest red, so a
+  // failure still stands out against the crimson accent.
   'black-ice': {
     id: 'black-ice',
     label: 'Netrunner: Black ICE',
     band: {
-      bg: '#140f19', text: '#ecdff0', muted: '#9a8aa6', empty: '#261c2e', line: '#1e1625',
-      accent: '#ff3ea5', second: '#b26bff', warn: '#f6c177', err: '#ff5c5c',
-      warm: '#00e5ff', cold: '#7a6c9c', ink: '#0d0811', glow: '#fff0f8',
+      bg: '#130909', text: '#f0dcdc', muted: '#9a7f7f', empty: '#2a1414', line: '#1f1010',
+      accent: '#c8202a', second: '#ff6f4d', warn: '#f6c177', err: '#ff4d4d',
+      warm: '#ffb38a', cold: '#7d6464', ink: '#0c0606', glow: '#ffe6e1',
     },
     look: {
-      surfaces: ['#0d0811', '#140f19', '#1a1320', '#1e1625'],
-      text: ['#ecdff0', '#c4b4cc', '#9a8aa6'],
-      roles: { accent: '#ff3ea5', danger: '#ff5c5c', success: '#9bd86a', warning: '#f6c177', pro: '#b26bff' },
-      scene: { link: '#ff3ea5', packet: '#00e5ff', dots: '#c2a3b8', shade: '#060308' },
+      surfaces: ['#0c0606', '#130909', '#190c0c', '#1f1010'],
+      text: ['#f0dcdc', '#c9abab', '#9a7f7f'],
+      roles: { accent: '#c8202a', danger: '#ff4d4d', success: '#9bd86a', warning: '#f6c177', pro: '#ff6f4d' },
+      scene: { link: '#c8202a', packet: '#ff6f4d', dots: '#a88585', shade: '#050202' },
     },
     skin: {
-      user: '#ff3ea5', fg: '#ecdff0', muted: '#9a8aa6', surface: '#1a1320', zebra: '#140f19',
-      ok: '#9bd86a', err: '#ff5c5c', warn: '#f6c177',
-      read: '#ff9ad5', write: '#00e5ff', run: '#b26bff', search: '#c9a3ff', web: '#7aa2f7', mcp: '#ff3ea5', other: '#d4b8e8',
+      user: '#ff5a52', fg: '#f0dcdc', muted: '#9a7f7f', surface: '#190c0c', zebra: '#130909',
+      ok: '#9bd86a', err: '#ff4d4d', warn: '#f6c177',
+      read: '#ff9a8a', write: '#ffb38a', run: '#ff6f4d', search: '#d98f8f', web: '#b89a9a', mcp: '#e0262f', other: '#cfb0ad',
     },
     filetree:
-      'fg=#ecdff0 bg=#0d0811 accent=#ff3ea5 muted=#9a8aa6 urgent=#ff5c5c selection=#3a1530 hover=#1c1424 jump=#00e5ff added=#9bd86a modified=#b26bff renamed=#00e5ff add=#9bd86a del=#ff5c5c',
+      'fg=#f0dcdc bg=#0c0606 accent=#e0262f muted=#9a7f7f urgent=#ff4d4d selection=#3a1214 hover=#1c0d0d jump=#ff6f4d added=#9bd86a modified=#ff9a8a renamed=#ff6f4d add=#9bd86a del=#ff4d4d',
   },
 }
 
