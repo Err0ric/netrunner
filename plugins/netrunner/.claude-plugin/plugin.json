@@ -1,6 +1,6 @@
 {
   "name": "netrunner",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Netrunner: a cyber theme for Claude Code. The whole app's look with a slow network-map background, a status band above the prompt (usage bars, prompt cache WARM/COLD, a WAITING line and a sweep while anything runs) and matching transcript skins, in four variants: Packet Trace, Zero Day, Cold Boot and Black ICE.",
   "author": {
     "name": "Err0ric",
@@ -42,6 +42,16 @@
       "options": [
         "apply",
         "keep"
+      ]
+    },
+    "filetree": {
+      "type": "string",
+      "title": "Match filetree",
+      "description": "match: when the filetree mod is installed, set its Palette to the variant's colors, so folders and git colors follow the theme. A palette you wrote yourself is left alone. off: never touch filetree's settings.",
+      "default": "match",
+      "options": [
+        "match",
+        "off"
       ]
     }
   },

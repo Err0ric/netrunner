@@ -67,6 +67,7 @@ In a terminal session, open `/config` and find **Netrunner**:
 | `variant` | `packet-trace`, `zero-day`, `cold-boot`, `black-ice` (in the desktop app, also the dots on the open cache card) | `packet-trace` |
 | `look` | `animated`: the variant's colors for the whole app and the moving network map. `still`: the same, held still. `off`: keep the app's own colors and background | `animated` |
 | `skin` | `apply` switches the transcript skin when you pick a variant; `keep` saves the skins but leaves yours alone | `apply` |
+| `filetree` | `match` sets the [filetree](https://github.com/data-goblin/claude-code-filetree) mod's palette to the variant's colors (a palette you wrote yourself is left alone); `off` never touches filetree | `match` |
 
 Or in `~/.claude/settings.json` (Windows: `%USERPROFILE%\.claude\settings.json`):
 
@@ -78,9 +79,11 @@ Or in `~/.claude/settings.json` (Windows: `%USERPROFILE%\.claude\settings.json`)
 
 To switch skins by hand: `/skin netrunner-black-ice` (or any other).
 
-### Matching file tree colors (optional)
+### Matching file tree colors
 
-If you use the [filetree](https://github.com/data-goblin/claude-code-filetree) mod, set its `palette` option to the line for your variant:
+If you use the [filetree](https://github.com/data-goblin/claude-code-filetree) mod, Netrunner sets its `palette` option to your variant's line at each start, so folders and git colors follow when you switch variants. It only writes over an empty palette or one of the lines below: a palette of your own stays as it is. Set Netrunner's `filetree` option to `off` to stop it.
+
+To set one by hand instead, these are the lines:
 
 | Variant | filetree `palette` |
 | --- | --- |

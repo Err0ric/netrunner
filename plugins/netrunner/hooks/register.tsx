@@ -6,7 +6,7 @@ import {
   BG, BLUE, EMPTY, HUE, INK, MAGENTA, MUTED, PILL_H, PILL_W, PILL_W_TIGHT, RED, TEXT, TTL_MIN, TTL_MS, WAIT, WORD, YELLOW,
   bandPx, cardSvg, chipSvg, costOf, familyOf, fmtAge, fmtIdle, kindOf, mineModel, pillSvg, sweepSvg, SWEEP_H, usd, useVariant, waitChipSvg,
 } from './cache-art'
-import { DONE, SPINNER, VARIANT_IDS, VARIANTS, skinName, variantOf } from './palettes'
+import { DONE, SPINNER, VARIANT_IDS, VARIANTS, isNetrunnerPalette, skinName, variantOf } from './palettes'
 import type { VariantId } from './palettes'
 import type { CacheView } from './cache-art'
 import { lookFor, lookModeOf, sceneName, sceneSvg } from './look'
@@ -172,10 +172,29 @@ export const pickVariant = async ($: EngineInterface, id: VariantId): Promise<vo
   if (r.deny) void $.ui.toast(`Netrunner: ${shortName(id)} not saved: ${r.deny}`)
 }
 
+/**
+ * Points the filetree mod's `palette` option at the variant's line, so its folders and
+ * git colors follow the theme. Only when filetree is installed (its row is listed), and
+ * only over an empty palette or one Netrunner wrote: a palette of the person's own stays.
+ * The write reloads filetree, which redraws with it.
+ */
+export const syncFiletree = async ($: EngineInterface, variant: VariantId): Promise<'set' | 'same' | 'kept' | 'absent'> => {
+  const rows = await $.config.list().catch(() => [])
+  const row = rows.find(r => /^filetree(@[^.]+)?\.palette$/.test(r.key))
+  if (!row || row.isLocked) return 'absent'
+  const want = VARIANTS[variant].filetree
+  const now = typeof row.value === 'string' ? row.value : ''
+  if (now === want) return 'same'
+  if (!isNetrunnerPalette(now)) return 'kept'
+  const r = (await $.config.set({ key: row.key, value: want }).catch(() => ({ deny: 'failed' }))) as { deny?: string }
+  return r.deny ? 'kept' : 'set'
+}
+
 export const register: Register = (on, options) => {
   const variant = variantOf(options.variant).id
   useVariant(variant)
   const applySkin = options.skin !== 'keep'
+  const matchFiletree = options.filetree !== 'off'
   const lookMode = lookModeOf(options.look)
   const scene = lookMode === 'off' ? '' : sceneSvg(variantOf(variant).look, lookMode === 'still')
 
@@ -193,7 +212,9 @@ export const register: Register = (on, options) => {
       }
     }
     // The skins mod registers its tool as its own session starts: give it a moment.
+    // filetree's rows are listed by then too.
     $.clock.after(1500, async () => {
+      if (matchFiletree) await syncFiletree($, variant).catch(() => undefined)
       const r = await syncSkins($, variant, applySkin)
       if (r === 'missing' && !(await $.store.get('skinsHintShown'))) {
         await $.store.set('skinsHintShown', true)
