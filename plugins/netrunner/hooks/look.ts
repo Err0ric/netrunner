@@ -53,6 +53,10 @@ function map(m: NetMap, links: string[], routes: [string, number, number][], pin
  * maps pinned to the top-right and bottom-left corners, away from the words and the
  * message box. Packets drift along the links and one node pings, on 12 to 70 second
  * loops. Held still for reduced motion, or when `still`.
+ *
+ * The grid fills the window by cropping a 1600 x 1000 box, which is fine for a pattern.
+ * The maps are not cropped: each sits in its own window corner at its drawn size, so a
+ * tall (portrait) or narrow window still shows both instead of cutting them off.
  */
 export function sceneSvg(look: AppLook, still = false): string {
   const { link, packet, dots, shade } = look.scene
@@ -70,7 +74,6 @@ export function sceneSvg(look: AppLook, still = false): string {
 @keyframes travel{from{stroke-dashoffset:100}to{stroke-dashoffset:0}}
 @keyframes ping{0%{transform:scale(1);opacity:.5}40%{transform:scale(7);opacity:0}100%{transform:scale(7);opacity:0}}
 @keyframes scan{from{transform:translateY(-20px)}to{transform:translateY(1020px)}}
-@media (max-aspect-ratio:1/1){.wide{display:none}}
 @media (prefers-reduced-motion:reduce){${hold}}
 ${still ? hold : ''}
 </style>
@@ -83,11 +86,11 @@ ${still ? hold : ''}
 <rect width="100%" height="100%" fill="${ground}"/>
 <svg width="100%" height="100%" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice">
 <rect width="1600" height="1000" fill="url(#dots)" opacity=".09" mask="url(#edges)"/>
-<g class="wide">${map(TR, TR_LINKS, [['fabcg', 26, 0], ['edcf', 34, 15]], 'c', 0)}</g>
-<g class="wide">${map(BL, BL_LINKS, [['fabdg', 30, 8], ['ecdb', 22, 3]], 'a', 6)}</g>
 <rect class="scan" x="0" y="0" width="1600" height="2"/>
-<rect width="1600" height="1000" fill="url(#vignette)"/>
 </svg>
+<svg class="pin" x="100%" y="0" overflow="visible"><g transform="translate(-1600 0)">${map(TR, TR_LINKS, [['fabcg', 26, 0], ['edcf', 34, 15]], 'c', 0)}</g></svg>
+<svg class="pin" x="0" y="100%" overflow="visible"><g transform="translate(0 -1000)">${map(BL, BL_LINKS, [['fabdg', 30, 8], ['ecdb', 22, 3]], 'a', 6)}</g></svg>
+<rect width="100%" height="100%" fill="url(#vignette)"/>
 </svg>`
 }
 
