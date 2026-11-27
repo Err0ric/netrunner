@@ -41,6 +41,19 @@ test('the variant colors the whole app and draws its network map', { options: { 
   expect(svg.split('*{animation:none!important}').length - 1).toBe(1)
 })
 
+test('the maps sit in their own window corners, so a tall window still shows them', { options: { variant: 'cold-boot' } }, async ($, on) => {
+  mock.clock(on)
+  engine(on, [])
+  await $.session.start(start as never)
+  const svg = await backdrop($, 'netrunner-cold-boot')
+  // No rule hides the maps by window shape.
+  expect(svg).not.toContain('aspect-ratio')
+  // Top-right and bottom-left, each pinned to its corner rather than cropped with the grid.
+  expect(svg).toContain('<svg class="pin" x="100%" y="0" overflow="visible">')
+  expect(svg).toContain('<svg class="pin" x="0" y="100%" overflow="visible">')
+  expect(svg.split('class="packet"').length - 1).toBe(4)
+})
+
 test('still: the same map with its motion held', { options: { variant: 'black-ice', look: 'still' } }, async ($, on) => {
   mock.clock(on)
   const looks: Parameters<typeof engine>[1] = []

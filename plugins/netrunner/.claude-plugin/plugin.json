@@ -1,6 +1,6 @@
 {
   "name": "netrunner",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "Netrunner: a cyber theme for Claude Code. The whole app's look with a slow network-map background, a status band above the prompt (usage bars, prompt cache WARM/COLD, a WAITING line and a sweep while anything runs) and matching transcript skins, in four variants: Packet Trace, Zero Day, Cold Boot and Black ICE.",
   "author": {
     "name": "Err0ric",
