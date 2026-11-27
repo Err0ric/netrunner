@@ -560,11 +560,14 @@ export const register: Register = (on, options) => {
     // While the card is open, one dot per variant sits just left of the fold glyph, on the
     // row that is already there: no row of its own. Each dot is its variant's accent; the
     // current one is ringed. A press saves the option and the reload repaints everything.
-    // One small circle per variant in its accent color, no spacers between them: a desktop
-    // draws each Button as a native button, so the circle alone is the smallest it gets.
+    // One small circle per variant, the current one ringed, no spacers between them. No
+    // `label`: a desktop draws a Button's label in place of its children, so a label made
+    // each dot a full variant name and pushed the fold control off the card. The desktop
+    // also draws the circles in one color, so each lights in its variant's accent while
+    // the pointer is over the row (the keyed `variants` Box).
     const dots = open
       ? VARIANT_IDS.map(id => (
-          <Button key={`variant-${id}`} label={shortName(id)} plain onPress={() => (id === variant ? undefined : pickVariant($, id))}>
+          <Button key={`variant-${id}`} plain hover={{ color: VARIANTS[id].band.accent }} onPress={() => (id === variant ? undefined : pickVariant($, id))}>
             <Text color={VARIANTS[id].band.accent} bold={id === variant}>{id === variant ? '◉' : '•'}</Text>
           </Button>
         ))
@@ -572,9 +575,9 @@ export const register: Register = (on, options) => {
     const button = Svg ? (
       <Box key="fold" flexDirection="row" flexShrink={0} alignItems="flex-start">
         {dots.length ? <Box key="variants" flexDirection="row" flexShrink={0} marginRight={1}>{dots}</Box> : null}
-        {/* One dim glyph instead of a full button; the label still names it for readers. */}
-        <Button key="cache-fold" label={open ? 'Hide' : 'Show'} plain dimColor onPress={toggle}>
-          {open ? '▴' : '▾'}
+        {/* One dim glyph instead of a full button: no label, which a desktop would draw instead. */}
+        <Button key="cache-fold" plain dimColor onPress={toggle}>
+          {open ? '▼' : '▲'}
         </Button>
       </Box>
     ) : null
